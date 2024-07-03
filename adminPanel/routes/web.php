@@ -20,10 +20,12 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('dashboard');
 Route::get('/schools', 'App\Http\Controllers\SchoolsController@index')->name('list_schools');
+
+Route::get('/schools/create', 'App\Http\Controllers\SchoolsController@add')->name('schools.create');
+Route::post('/schools/save', 'App\Http\Controllers\SchoolsController@save')->name('schools.save');
 
 
 Route::group(['middleware' => 'auth'], function () {

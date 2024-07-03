@@ -17,4 +17,17 @@ class SchoolsController extends Controller
         $arr['schools'] = School::all();
         return view('schools.index')->with($arr);
     }
+
+    public function add()
+    {
+        return view('schools.createSchool');
+    }
+    public function save()
+    {
+        // $school = new School();
+        // $school->name = $request->name;
+        // $school->address = $request->address;
+        // $school->save();
+        // return redirect()->route('list_schools');
+    }
 }
