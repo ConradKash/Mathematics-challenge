@@ -6,7 +6,7 @@
         <div class="container-fluid">
         <div class="formbold-main-wrapper">
         <div class="formbold-form-wrapper">
-            <form action="{{ route('schools.save') }}" method="post">
+            <form action="{{ route('schools.save') }}" method="post" class = 'submitForm'>
                 @csrf
                 <div class="formbold-steps">
                     <ul>
@@ -59,11 +59,11 @@
                 </div>
 
                 <div class="formbold-form-btn-wrapper">
-                <button class="formbold-back-btn">
+                <button type="submit" class="formbold-back-btn">
                     Back
                 </button>
 
-                <button class="formbold-btn">
+                <button  class="formbold-btn">
                     Next Step
                 </button>
                 </div>
@@ -254,7 +254,6 @@
 <script>
   const stepMenuOne = document.querySelector('.formbold-step-menu1')
   const stepMenuTwo = document.querySelector('.formbold-step-menu2')
-  const stepMenuThree = document.querySelector('.formbold-step-menu3')
 
   const stepOne = document.querySelector('.formbold-form-step-1')
   const stepTwo = document.querySelector('.formbold-form-step-2')
@@ -288,10 +287,10 @@
         })
         
         formSubmitBtn.textContent = 'Submit'
+        formSubmitBtn.type = 'submit'
 
       } else if(stepMenuTwo.className == 'formbold-step-menu2 active') {
-        event.preventDefault()
-        document.querySelector('form').submit()
+        document.querySelector('.submitForm').submit()
       }
   })
     

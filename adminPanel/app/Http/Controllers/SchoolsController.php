@@ -24,6 +24,7 @@ class SchoolsController extends Controller
     }
     public function save()
     {
+        dump($_POST);
         // $school = new School();
         // $school->name = $request->name;
         // $school->address = $request->address;
