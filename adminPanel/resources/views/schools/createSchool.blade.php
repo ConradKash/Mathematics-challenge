@@ -46,16 +46,51 @@
                 </div>
 
                 <div class="formbold-form-step-2">
-                <div>
-                    <label for="message" class="formbold-form-label"> Message </label>
-                    <textarea
-                    rows="6"
-                    name="message"
-                    id="message"
-                    placeholder="Type your message"
-                    class="formbold-form-input"
-                    ></textarea>
-                </div>
+                  <div class="formbold-input-flex">
+                    <div>
+                        <label for="firstname" class="formbold-form-label"> Name </label>
+                        <input
+                        type="text"
+                        name="name"
+                        placeholder="Name"
+                        id="name"
+                        class="formbold-form-input"
+                        />
+                    </div>
+                    <div>
+                        <label for="lastname" class="formbold-form-label"> Password </label>
+                        <input
+                        type="password"
+                        name="password"
+                        placeholder="Password"
+                        id="password"
+                        class="formbold-form-input"
+                        />
+                    </div>
+                  </div>
+          
+                  <div class="formbold-input-flex">
+                      <div>
+                          <label for="dob" class="formbold-form-label"> Contact </label>
+                          <input 
+                          type="text" 
+                          name="phone" 
+                          id="phone" 
+                          placeholder="Phone Number"
+                          class="formbold-form-input"
+                          />
+                      </div>
+                      <div>
+                          <label for="email" class="formbold-form-label"> Email Address </label>
+                          <input
+                          type="email"
+                          name="email"
+                          placeholder="example@mail.com"
+                          id="email"
+                          class="formbold-form-input"
+                          />
+                      </div>
+                  </div>
                 </div>
 
                 <div class="formbold-form-btn-wrapper">

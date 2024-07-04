@@ -26,6 +26,7 @@ Route::get('/schools', 'App\Http\Controllers\SchoolsController@index')->name('li
 
 Route::get('/schools/create', 'App\Http\Controllers\SchoolsController@add')->name('schools.create');
 Route::post('/schools/save', 'App\Http\Controllers\SchoolsController@save')->name('schools.save');
+Route::get('/schools/schoolRepresentative', 'App\Http\Controllers\SchoolRespresentativesController@index')->name('list_schoolRepresentatives');
 
 
 Route::group(['middleware' => 'auth'], function () {
