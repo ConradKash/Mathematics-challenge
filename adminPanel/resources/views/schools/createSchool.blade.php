@@ -23,11 +23,11 @@
 
                 <div class="formbold-form-step-1 active">
                 <div>
-                    <label for="address" class="formbold-form-label"> School Name </label>
+                    <label for="schoolName" class="formbold-form-label"> School Name </label>
                     <input
                     type="text"
-                    name="name"
-                    id="Name"
+                    name="schoolName"
+                    id="schoolName"
                     placeholder="Enter the school name"
                     class="formbold-form-input"
                     />
