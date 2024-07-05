@@ -83,9 +83,6 @@ public function rules()
 | [![Profile Page](screens/Profile.png)](https://light-bootstrap-dashboard-laravel.creative-tim.com/profile?ref=lbdlp-readme)  | [![Users Page](screens/Users.png)](https://light-bootstrap-dashboard-laravel.creative-tim.com/user?ref=lbdl-readme) | [![Tables Page](screens/Tables.png)](https://light-bootstrap-dashboard-laravel.creative-tim.com/table-list?ref=lbdl-readme)
 [View More](https://light-bootstrap-dashboard-laravel.creative-tim.com/?ref=lbdl-readme)
 
-## Documentation
-The documentation for the Light Bootstrap Dashboard Laravel is hosted at our [website](https://www.creative-tim.com/live/light-bootstrap-dashboard-laravel/?start-page=/docs/tutorial-components.html&ref=lbdl-readme).
-
 ## File Structure
 ```
 +--- app

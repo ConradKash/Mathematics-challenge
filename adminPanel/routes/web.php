@@ -20,9 +20,17 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Auth::routes();
 
 Route::get('/home', 'App\Http\Controllers\HomeController@index')->name('dashboard');
+Route::get('/schools', 'App\Http\Controllers\SchoolsController@index')->name('list_schools');
+
+Route::get('/schools/create', 'App\Http\Controllers\SchoolsController@add')->name('schools.create');
+Route::post('/schools/save', 'App\Http\Controllers\SchoolsController@save')->name('schools.save');
+Route::get('/schools/edit/{id}', 'App\Http\Controllers\SchoolsController@edit')->name('schools.edit');
+Route::put('/schools/update/{id}', 'App\Http\Controllers\SchoolsController@update')->name('schools.update');
+Route::get('/schools/schoolRepresentative', 'App\Http\Controllers\SchoolRespresentativesController@index')->name('list_schoolRepresentatives');
+Route::delete('/schools/{id}', 'App\Http\Controllers\SchoolsController@delete')->name('schools.delete');
+
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'App\Http\Controllers\UserController', ['except' => ['show']]);
