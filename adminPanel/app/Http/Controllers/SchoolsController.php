@@ -15,8 +15,13 @@ class SchoolsController extends Controller
 
     public function index()
     {
-        $arr['schools'] = School::all();
-        return view('schools.index')->with($arr);
+        $schools = School::all();
+        $schoolRepresentatives = SchoolRepresentative::all();
+        $schoolRepresentatives = SchoolRepresentative::select('school_representatives.*', 'schools.name as school_name')
+            ->join('schools', 'schools.id', '=', 'school_representatives.school_id')
+            ->get();
+
+        return view('schools.index', compact('schools', 'schoolRepresentatives'));
     }
 
     public function add()
@@ -40,13 +45,22 @@ class SchoolsController extends Controller
         return redirect()->route('list_schools');
     }
 
-    public function update (Request $request, $id)
+    public function edit($id)
+    {
+        $school = School::find($id);
+        $schoolRepresentative = new SchoolRepresentative;
+        $schoolRepresentative->select('id', 'name')->where('school_id', 15)->get();
+        return view('schools.editSchool', compact('school', 'schoolRepresentative'));
+    }
+
+    public function update(Request $request, $id)
     {
         $school = School::find($id);
         $school->name = $request->name;
         $school->district = $request->district;
         $school->save();
-        $schoolRepresentative = SchoolRepresentative::find($id);
+        $schoolRepresentative = new SchoolRepresentative;
+        $schoolRepresentative->where('school_id', $id)->get();
         $schoolRepresentative->name = $request->name;
         $schoolRepresentative->email = $request->email;
         $schoolRepresentative->phone = $request->phone;
@@ -56,18 +70,12 @@ class SchoolsController extends Controller
         return redirect()->route('list_schools');
     }
 
-    public function edit($id)
-    {
-        $school = School::find($id);
-        $schoolRepresentative = SchoolRepresentative::find($id);
-        return view('schools.edit', compact('school', 'schoolRepresentative'));
-    }
-
     public function delete($id)
     {
         $school = School::find($id);
         $school->delete();
-        $schoolRepresentative = SchoolRepresentative::find($id);
+        $schoolRepresentative = new SchoolRepresentative;
+        $schoolRepresentative->where('school_id', $id)->get();
         $schoolRepresentative->delete();
         return redirect()->route('list_schools');
     }
