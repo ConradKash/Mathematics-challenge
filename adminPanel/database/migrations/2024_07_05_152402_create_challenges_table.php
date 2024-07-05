@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('challenges', function (Blueprint $table) {
             $table->id();
             $table->dateTime('duration', precision: 0);
-            $table->date('startDate', precision: 0);
-            $table->date('endDate', precision: 0);
-            $table->int('questionCount');
+            $table->date('startDate');
+            $table->date('endDate');
+            $table->integer('questionCount');
             $table->timestamps();
         });
     }
