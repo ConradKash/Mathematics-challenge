@@ -6,7 +6,7 @@
     <div class="container-fluid">
         <div class="formbold-main-wrapper">
             <div class="formbold-form-wrapper">
-                <form action="{{ route('schools.update', $school->id) }}" method="POST" class='submitForm'>
+                <form action="{{ route('schools.update', $schools->id) }}" method="POST" class='submitForm'>
                     @method('PUT')
                     @csrf
                     <div class="formbold-steps">
@@ -25,12 +25,12 @@
                     <div class="formbold-form-step-1 active">
                         <div>
                             <label for="schoolName" class="formbold-form-label"> School Name </label>
-                            <input type="text" name="schoolName" id="schoolName" value="{{$school->name}}" placeholder="Enter the school name" class="formbold-form-input" />
+                            <input type="text" name="schoolName" id="schoolName" value="{{$schools->name}}" placeholder="Enter the school name" class="formbold-form-input" />
                         </div>
 
                         <div>
                             <label for="address" class="formbold-form-label"> District </label>
-                            <input type="text" name="district" id="district" value="{{$school->district}}" placeholder="Enter the district" class="formbold-form-input" />
+                            <input type="text" name="district" id="district" value="{{$schools->district}}" class="formbold-form-input" />
                         </div>
                     </div>
 
@@ -38,7 +38,7 @@
                         <div class="formbold-input-flex">
                             <div>
                                 <label for="firstname" class="formbold-form-label"> Name </label>
-                                <input type="text" name="name" placeholder="Name" id="name" value="{{$school_representative->name}}" class="formbold-form-input" />
+                                <input type="text" name="name" value="{{$schoolRepresentatives[0]->name}}" placeholder="Name" id="name" value="Conrad" class="formbold-form-input" />
                             </div>
                             <div>
                                 <label for="lastname" class="formbold-form-label"> Password </label>
@@ -49,11 +49,11 @@
                         <div class="formbold-input-flex">
                             <div>
                                 <label for="dob" class="formbold-form-label"> Contact </label>
-                                <input type="text" name="phone" id="phone" placeholder="Phone Number" value="{{$school_representative->phone}}" class="formbold-form-input" />
+                                <input type="text" name="phone" id="phone" placeholder="Phone Number" value="{{$schoolRepresentatives[0]->phone}}" class="formbold-form-input" />
                             </div>
                             <div>
                                 <label for="email" class="formbold-form-label"> Email Address </label>
-                                <input type="email" name="email" placeholder="example@mail.com" id="email" value="{{$school_representatives->email}}" class="formbold-form-input" />
+                                <input type="email" name="email" placeholder="example@mail.com" value="{{$schoolRepresentatives[0]->email}}" id="email" class="formbold-form-input" />
                             </div>
                         </div>
                     </div>

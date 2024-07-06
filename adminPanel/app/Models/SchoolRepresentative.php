@@ -7,4 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class SchoolRepresentative extends Model
 {
+    protected $fillable = ['name', 'email', 'phone', 'school_id', 'password'];
 }
