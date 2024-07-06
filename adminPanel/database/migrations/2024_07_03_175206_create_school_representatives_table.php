@@ -13,10 +13,11 @@ return new class extends Migration
     {
         Schema::create('school_representatives', function (Blueprint $table) {
             $table->id();
-            $table->string('name'); 
+            $table->string('name');
             $table->string('email')->unique();
             $table->string('phone');
-            $table->integer('school_id');
+            $table->unsignedBigInteger('school_id');
+            $table->foreign('school_id')->references('id')->on('schools')->onDelete('cascade')->OnUpdate('cascade');
             $table->string('password');
             $table->timestamps();
         });
@@ -27,6 +28,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('school_representatives');
+        Schema::dropIfExists('school_representatives', function (Blueprint $table) {
+            $table->dropForeign('school_representatives_school_id_foreign');
+            $table->dropIndex('school_representatives_school_id_index');
+            $table->dropColumn('school_id');
+        });
     }
 };
