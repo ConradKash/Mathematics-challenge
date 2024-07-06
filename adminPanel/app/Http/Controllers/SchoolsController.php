@@ -49,8 +49,8 @@ class SchoolsController extends Controller
     {
         $school = School::find($id);
         $schoolRepresentative = new SchoolRepresentative;
-        $schoolRepresentative->select('id', 'name')->where('school_id', 15)->get();
-        return view('schools.editSchool', compact('school', 'schoolRepresentative'));
+        $schoolRepresentative->where('school_id', $id)->first();
+        return view('schools.editSchool', compact('schoolRepresentative'));
     }
 
     public function update(Request $request, $id)
@@ -60,7 +60,7 @@ class SchoolsController extends Controller
         $school->district = $request->district;
         $school->save();
         $schoolRepresentative = new SchoolRepresentative;
-        $schoolRepresentative->where('school_id', $id)->get();
+        $schoolRepresentative->where('school_id', $id)->first();
         $schoolRepresentative->name = $request->name;
         $schoolRepresentative->email = $request->email;
         $schoolRepresentative->phone = $request->phone;
@@ -73,10 +73,10 @@ class SchoolsController extends Controller
     public function delete($id)
     {
         $school = School::find($id);
-        $school->delete();
-        $schoolRepresentative = new SchoolRepresentative;
-        $schoolRepresentative->where('school_id', $id)->get();
-        $schoolRepresentative->delete();
+        if ($school != null) {
+            $school->delete();
+            return redirect()->route('list_schools');
+        }
         return redirect()->route('list_schools');
     }
 }

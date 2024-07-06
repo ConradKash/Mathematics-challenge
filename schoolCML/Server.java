@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.UUID;
 
-public class ClientHandler implements Runnable {
+public class Server implements Runnable {
 
     private static final int LOAN_REQUEST_THRESHOLD = 10;
     private Socket clientSocket;
@@ -22,7 +22,7 @@ public class ClientHandler implements Runnable {
     private SaccoMember saccoMember;
     private Database database;
 
-    public ClientHandler(Socket socket, Database database) {
+    public Server(Socket socket, Database database) {
         this.clientSocket = socket;
         this.database = database;
         try {
@@ -39,19 +39,29 @@ public class ClientHandler implements Runnable {
         try {
 
             out.println(
-                    "Please log in using the command: 'login  username  password' (e.g login  allan21  password1111)");
+                    "");
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
                 System.out.println("From Client: " + inputLine);
-                String[] command = inputLine.split(" ");
-                if (command.length != 3) {
-                    out.println("Invalid command. Usage: login username password");
+                if (inputLine == "1") {
 
-                } else if (command[0].equalsIgnoreCase("login") && command.length == 3) {
-                    handleLogin(command);
-                    break;
+                } else if (inputLine == "2") {
+
                 } else {
-                    out.println("Invalid command. Please log in using the command 'login username password'");
+                    String inputLogin;
+                    while ((inputLogin = in.readLine()) != null) {
+                        System.out.println("From Client: " + inputLogin);
+                        String[] login = inputLogin.split(" ");
+                        if (login.length != 3) {
+                            out.println("Invalid command. Usage: login username password");
+
+                        } else if (login[0].equalsIgnoreCase("login") && login.length == 3) {
+                            handleLogin(login);
+                            break;
+                        } else {
+                            out.println("Invalid command. Please log in using the command 'login username password'");
+                        }
+                    }
                 }
             }
         } catch (IOException | SQLException e) {
@@ -77,8 +87,7 @@ public class ClientHandler implements Runnable {
                 // Create and set the saccoMember object after successful authentication
                 // Set the memberNumber for the current saccoMember
                 saccoMember = new SaccoMember(username, memberNumber, surname, firstName, gender);
-                out.println("Welcome back, " + username + "!                                              Date: "
-                        + LocalDate.now());
+                out.println("Welcome back, " + username + "!            Date: " + LocalDate.now());
                 out.println(
                         "We're glad to have you here at Uprise sacco. Remember that your financial well-being is our priority.");
                 out.println(
