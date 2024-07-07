@@ -11,13 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('school_representatives', function (Blueprint $table) {
+        Schema::create('participants', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('phone');
+            $table->string('userName');
+            $table->string('firstName');
+            $table->string('lastName');
             $table->unsignedBigInteger('school_id');
             $table->foreign('school_id')->references('id')->on('schools')->onDelete('cascade')->OnUpdate('cascade');
+            $table->string('profilePicture');
+            $table->string('emailAddress')->unique();
+            $table->date('dateOfBirth');
             $table->string('password');
             $table->timestamps();
         });
@@ -28,9 +31,9 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('school_representatives', function (Blueprint $table) {
-            $table->dropForeign('school_representatives_school_id_foreign');
-            $table->dropIndex('school_representatives_school_id_index');
+        Schema::dropIfExists('participants', function (Blueprint $table) {
+            $table->dropForeign('participants_school_id_foreign');
+            $table->dropIndex('participants_school_id_index');
             $table->dropColumn('school_id');
         });
     }

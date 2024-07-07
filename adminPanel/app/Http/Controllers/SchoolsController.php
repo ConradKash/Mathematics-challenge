@@ -47,25 +47,23 @@ class SchoolsController extends Controller
 
     public function edit($id)
     {
-        $school = School::find($id);
-        $schoolRepresentative = new SchoolRepresentative;
-        $schoolRepresentative->select('id', 'name')->where('school_id', 15)->get();
-        return view('schools.editSchool', compact('school', 'schoolRepresentative'));
+        $schools = School::find($id);
+        $schoolRepresentatives = SchoolRepresentative::where('school_id', $id)->get();
+        return view('schools.editSchool')->with('schools', $schools)->with('schoolRepresentatives', $schoolRepresentatives);
     }
 
     public function update(Request $request, $id)
     {
         $school = School::find($id);
-        $school->name = $request->name;
-        $school->district = $request->district;
+        $school->name = request()->get('schoolName');
+        $school->district = request()->get('district');
         $school->save();
-        $schoolRepresentative = new SchoolRepresentative;
-        $schoolRepresentative->where('school_id', $id)->get();
-        $schoolRepresentative->name = $request->name;
-        $schoolRepresentative->email = $request->email;
-        $schoolRepresentative->phone = $request->phone;
+        $schoolRepresentative = SchoolRepresentative::where('school_id', $id)->first();
+        $schoolRepresentative->name = request()->get('name');
+        $schoolRepresentative->email = request()->get('email');
+        $schoolRepresentative->phone = request()->get('phone');
         $schoolRepresentative->school_id = $school->id;
-        $schoolRepresentative->password = $request->password;
+        $schoolRepresentative->password = request()->get('password');
         $schoolRepresentative->save();
         return redirect()->route('list_schools');
     }
@@ -73,10 +71,10 @@ class SchoolsController extends Controller
     public function delete($id)
     {
         $school = School::find($id);
-        $school->delete();
-        $schoolRepresentative = new SchoolRepresentative;
-        $schoolRepresentative->where('school_id', $id)->get();
-        $schoolRepresentative->delete();
+        if ($school != null) {
+            $school->delete();
+            return redirect()->route('list_schools');
+        }
         return redirect()->route('list_schools');
     }
 }

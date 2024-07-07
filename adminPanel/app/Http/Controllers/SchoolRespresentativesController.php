@@ -32,4 +32,7 @@ class SchoolRespresentativesController extends Controller
         // $school->save();
         // return redirect()->route('list_schools');
     }
+    public function exchange() {
+        
+    }
 }
