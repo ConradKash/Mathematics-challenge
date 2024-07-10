@@ -3,7 +3,9 @@
 namespace App\Imports;
 use App\Models\Question;
 use Maatwebsite\Excel\Concerns\ToModel;
-class challenges implements ToModel
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+
+class challenges implements ToModel,  WithHeadingRow
 {
     
     public function model(array $row)
@@ -11,10 +13,10 @@ class challenges implements ToModel
             
             // Define how to create a model from the Excel row data
                  return new Question([
-                'id'=> 1,   
-                'challenge_id'=> 1,
-                'question'=> $row['question'],
-                'answer'=> $row[''],
+                'id'=> $row['id'],   
+                'challenge_id'=> $row['challenge_id'],
+                'question'=> $row['questions'],
+                'answer'=> $row['answer'],
                 'score'=> $row['score'],
             ]);
     }

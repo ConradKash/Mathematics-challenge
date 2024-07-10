@@ -21,7 +21,7 @@ class QuestionController extends Controller
     {
     // Validate the uploaded file
     $request->validate([
-     'file' => 'required|mimes:xlsx',// Validate file type  
+     'file' => 'required|mimes:xlsx,xls',// Validate file type  
    
     ]);
     // Retrieve the uploaded file
