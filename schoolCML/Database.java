@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Database {
-    private static final String URL = "jdbc:mysql://localhost:3306/sacco";
+    private static final String URL = "jdbc:mysql://localhost:3306/mathematicschallenge";
     private static final String USER = "root";
     private static final String PASSWORD = "";
 
@@ -18,6 +18,22 @@ public class Database {
     private static Connection getConnection() throws SQLException {
         return DriverManager.getConnection(URL, USER, PASSWORD);
     }
+
+    public void availableSchools() {
+        try (Connection connection = getConnection();
+                PreparedStatement statement = connection.prepareStatement("SELECT * FROM schools");
+                ResultSet resultSet = statement.executeQuery()) {
+
+            while (resultSet.next()) {
+                String schoolName = resultSet.getString("name");
+                String schoolLocation = resultSet.getString("district");
+
+                System.out.println(schoolName + " " + schoolLocation);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }   
 
     public boolean isValidCredentials(String username, String password) {
         try (Connection conn = getConnection();
