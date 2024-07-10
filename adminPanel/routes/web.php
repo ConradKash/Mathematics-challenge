@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
-
 Route::get('/', function () {
     return view('welcome');
 });
@@ -30,6 +29,8 @@ Route::get('/schools/edit/{id}', 'App\Http\Controllers\SchoolsController@edit')-
 Route::put('/schools/update/{id}', 'App\Http\Controllers\SchoolsController@update')->name('schools.update');
 Route::get('/schools/schoolRepresentative', 'App\Http\Controllers\SchoolRespresentativesController@index')->name('list_schoolRepresentatives');
 Route::delete('/schools/{id}', 'App\Http\Controllers\SchoolsController@delete')->name('schools.delete');
+Route::get('/challenges','App\Http\Controllers\QuestionController@index')->name('challenges');
+Route::post('/challenges','App\Http\Controllers\QuestionController@import');
 
 
 Route::group(['middleware' => 'auth'], function () {
