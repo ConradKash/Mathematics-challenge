@@ -21,7 +21,9 @@ public class Main {
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("New user connected: " + clientSocket.getInetAddress());
 
-               
+                // Server server = new Server(clientSocket, database); //passing the database instance
+
+                // Thread thread = new Thread(server);
                  ClientHandler clientHandler = new ClientHandler(clientSocket, database); //passing the database instance
 
                 // Create a new thread to handle the client's requests

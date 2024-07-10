@@ -39,16 +39,20 @@ public class ClientHandler implements Runnable {
         try {
 
             out.println(
-                    "Please log in using the command: 'login  username  password' (e.g login  allan21  password1111)");
+                    "Enter Numbers from 1 to 10");
             String inputLine;
             while ((inputLine = in.readLine()) != null) {
                 System.out.println("From Client: " + inputLine);
                 String[] command = inputLine.split(" ");
                 if (command.length != 3) {
+                    database.availableSchools();
                     out.println("Invalid command. Usage: login username password");
 
                 } else if (command[0].equalsIgnoreCase("login") && command.length == 3) {
                     handleLogin(command);
+                    break;
+                } else if (inputLine == "1"){
+                    handleRegistration();
                     break;
                 } else {
                     out.println("Invalid command. Please log in using the command 'login username password'");
@@ -57,6 +61,9 @@ public class ClientHandler implements Runnable {
         } catch (IOException | SQLException e) {
             e.printStackTrace();
         }
+
+    }
+    private void handleRegistration() {
 
     }
 

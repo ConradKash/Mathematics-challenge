@@ -22,7 +22,7 @@ public class UprizeClient {
                 String response;
                 System.out.println();
                 response = inFromServer.readLine();
-                //System.out.println(response);
+                System.out.println(response);
             
             // Check if the response indicates the need to log in
             if (response.equals("Please log in using the command: 'login  username  password' (e.g login  allan21  password1111)")) {
