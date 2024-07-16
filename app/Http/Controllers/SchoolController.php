@@ -10,7 +10,7 @@ class SchoolController extends Controller
 
     public function school()
 {
-    $activePage = 'school';
+    $activePage = 'school'; 
     $schools = School::all();
     return view('pages.school', compact('schools', 'activePage'));
 }
@@ -28,7 +28,7 @@ class SchoolController extends Controller
         'name' => 'required|string',
         'district' => 'required|string',
         'registration_number' => 'required|string|unique:schools',
-        'email' => 'nullable|email',
+        'representative_email' => 'nullable|email',
         'representative_name' => 'nullable|string',
         'validated' => 'nullable|boolean',  // Add validation rule for validated
     ]);
@@ -53,7 +53,7 @@ class SchoolController extends Controller
             'name' => 'required|string',
             'district' => 'required|string',
             'registration_number' => 'required|string|unique:schools,registration_number,'.$school->id,
-            'email' => 'nullable|email',
+            'representative_email' => 'nullable|email',
             'representative_name' => 'nullable|string',
         ]);
 

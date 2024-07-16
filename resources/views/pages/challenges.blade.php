@@ -9,24 +9,22 @@
             <table class="table">
                 <thead>
                     <tr>
-                        <th>Name</th>
+                        <th>Title</th>
                         <th>Description</th>
-                        <th>Start Date</th>
-                        <th>End Date</th>
-                        <th>Duration</th>
-                        <th>Number of Questions</th>
+                        <th>Starting Date</th>
+                        <th>Closing Date</th>
+                        <th>Duration (minutes)</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach($challenges as $challenge)
                     <tr>
-                        <td>{{ $challenge->name }}</td>
+                        <td>{{ $challenge->title }}</td>
                         <td>{{ $challenge->description }}</td>
-                        <td>{{ $challenge->start_date }}</td>
-                        <td>{{ $challenge->end_date }}</td>
-                        <td>{{ $challenge->duration }}</td>
-                        <td>{{ $challenge->number_of_questions }}</td>
+                        <td>{{ $challenge->starting_date }}</td>
+                        <td>{{ $challenge->closing_date }}</td>
+                        <td>{{ $challenge->duration_minutes }}</td>
                         <td>
                             <a href="{{ route('challenges.show', $challenge->id) }}" class="btn btn-info">View</a>
                             <a href="{{ route('challenges.edit', $challenge->id) }}" class="btn btn-warning">Edit</a>

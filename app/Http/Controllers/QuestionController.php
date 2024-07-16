@@ -42,8 +42,8 @@ class QuestionController extends Controller
         foreach ($questions[0] as $questionRow) {
             $question = Question::create(['content' => $questionRow[0]]);
             $answerRow = $answers[0]->firstWhere('0', $questionRow[0]);
-
-            Answer::create([
+ 
+            Answer::create([ 
                 'question_id' => $question->id,
                 'content' => $answerRow[1],
                 'marks' => intval($answerRow[2]), // Ensure marks is an integer

@@ -12,10 +12,10 @@ class CreateSchoolsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('district');
-            $table->string('registration_number')->unique();
-            $table->string('email')->nullable();
-            $table->string('representative_name')->nullable();
-            $table->boolean('validated')->default(false); // For validation status
+            $table->string('registration_number');
+            $table->string('representative_email');
+            $table->string('representative_name');
+            $table->boolean('validated')->default(false);
             $table->timestamps();
         });
     }

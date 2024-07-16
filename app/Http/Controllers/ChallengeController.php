@@ -14,9 +14,11 @@ class ChallengeController extends Controller
 
     public function challenges()
     {
+        $challenges = Challenge::all();
         // Logic to handle 'page.challenges' route
         return view('pages.challenges');
     }
+    
     public function create()
     {
         return view('challenges.create');
@@ -25,12 +27,12 @@ class ChallengeController extends Controller
     public function store(Request $request)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-            'duration' => 'required|integer',
-            'number_of_questions' => 'required|integer',
+            'starting_date' => 'required|date',
+            'closing_date' => 'required|date',
+            'duration_minutes' => 'required|integer',
+            
         ]);
 
         $challenge = new Challenge($validatedData);
@@ -58,12 +60,11 @@ class ChallengeController extends Controller
     public function update(Request $request, Challenge $challenge)
     {
         $validatedData = $request->validate([
-            'name' => 'required|string|max:255',
+            'title' => 'required|string|max:255',
             'description' => 'nullable|string',
-            'start_date' => 'required|date',
-            'end_date' => 'required|date',
-            'duration' => 'required|integer',
-            'number_of_questions' => 'required|integer',
+            'starting_date' => 'required|date',
+            'closing_date' => 'required|date',
+            'duration_minutes' => 'required|integer',
         ]);
 
         $challenge->update($validatedData);

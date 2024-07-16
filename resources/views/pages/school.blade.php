@@ -9,7 +9,7 @@
                 <th>Name</th>
                 <th>District</th>
                 <th>Registration Number</th>
-                <th>Email</th>
+                <th>Email </th>
                 <th>Representative Name</th>
                 <th>Validated</th>
             </tr>
@@ -19,8 +19,8 @@
                 <tr>
                     <td>{{ $school->name }}</td>
                     <td>{{ $school->district }}</td>
-                    <td>{{ $school->registration_number }}</td>
-                    <td>{{ $school->email }}</td>
+                    <td>{{ $school->school_registration_number }}</td>
+                    <td>{{ $school->representative_email }}</td>
                     <td>{{ $school->representative_name }}</td>
                     <td>{{ $school->validated ? 'Yes' : 'No' }}</td>
                     <td>

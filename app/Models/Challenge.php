@@ -1,5 +1,5 @@
 <?php
-
+// app/Models/Challenge.php
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,16 +10,12 @@ class Challenge extends Model
     use HasFactory;
 
     protected $fillable = [
-        'name',
+        'title',
         'description',
-        'start_date',
-        'end_date',
-        'duration',
-        'number_of_questions',
+        'starting_date',
+        'closing_date',
+        'duration_minutes',
     ];
 
-    protected $dates = [
-        'start_date',
-        'end_date',
-    ];
+    protected $table = 'challenge'; // Ensure this is correct
 }
