@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('challenges', function (Blueprint $table) {
             $table->id();
-            $table->dateTime('duration');
+            $table->integer('duration');
             $table->date('startDate');
             $table->date('endDate');
             $table->integer('questionCount');

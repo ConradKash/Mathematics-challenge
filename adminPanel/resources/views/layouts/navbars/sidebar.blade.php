@@ -17,7 +17,7 @@ Tip 2: you can also add an image using data-image tag
                     <p>{{ __("Dashboard") }}</p>
                 </a>
             </li>
-            
+
 
             <li class="nav-item @if($activePage == 'list_schools') active @endif">
                 <a class="nav-link" href="{{route('list_schools')}}">
@@ -25,16 +25,16 @@ Tip 2: you can also add an image using data-image tag
                     <p>{{ __("School Admin") }}</p>
                 </a>
             </li>
-            
-            <li class="nav-item @if($activePage == 'typography') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'typography')}}">
+
+            <li class="nav-item @if($activePage == 'challenges.index') active @endif">
+                <a class="nav-link" href="{{route('challenges.index')}}">
                     <i class="nc-icon nc-paper-2"></i>
                     <p>{{ __("Challenges") }}</p>
                 </a>
             </li>
-           
+
             <li class="nav-item">
-                <a class="nav-link" data-toggle="collapse" href="#laravelExamples" @if($activeButton =='laravel') aria-expanded="true" @endif>
+                <a class="nav-link" data-toggle="collapse" href="#laravelExamples" @if($activeButton=='laravel' ) aria-expanded="true" @endif>
                     <i>
                         <img src="{{ asset('light-bootstrap/img/laravel.svg') }}" style="width:25px">
                     </i>
