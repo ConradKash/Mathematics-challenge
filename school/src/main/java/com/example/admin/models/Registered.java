@@ -12,6 +12,9 @@ public class Registered {
     private Date dateOfBirth;
     private String password;
 
+    public Registered() {
+    }
+
     public Registered(String userName, String firstName, String lastName, Integer schoolId, String profilePicture,
             String emailAddress, Date dateOfBirth, String password) {
         this.userName = userName;
