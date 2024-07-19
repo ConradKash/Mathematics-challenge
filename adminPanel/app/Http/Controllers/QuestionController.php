@@ -1,8 +1,9 @@
 <?php
-
 namespace App\Http\Controllers;
-
 use App\Models\Question;
+use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\challenges;
 use App\Http\Requests\StoreQuestionRequest;
 use App\Http\Requests\UpdateQuestionRequest;
 
@@ -13,7 +14,24 @@ class QuestionController extends Controller
      */
     public function index()
     {
-        //
+        return view('question-layout');
+          
+    }
+    public function import(Request $request)
+    {
+    // Validate the uploaded file
+    $request->validate([
+     'file' => 'required|mimes:xlsx,xls',// Validate file type  
+   
+    ]);
+    // Retrieve the uploaded file
+    $file = $request->file('file');
+    // Process the Excel file to check if file exists in the request and prevents errors.
+    Excel::import(new challenges,$file);
+    //Redirect back with success message after validating
+    return redirect()->back()->with('success', 'Successfully uploaded');
+    //Handle any exceptions that occur during the import process
+    return redirect()->back()->with('error', 'Error got' . $e->getMessage());
     }
 
     /**
