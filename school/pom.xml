@@ -14,6 +14,21 @@
     </properties>
 
     <dependencies>
+<dependency>
+  <groupId>org.jxls</groupId>
+  <artifactId>jxls-jexcel</artifactId>
+  <version>1.0.9</version>
+</dependency>
+<dependency>
+    <groupId>org.dhatim</groupId>
+    <artifactId>fastexcel-reader</artifactId>
+    <version>0.17.0</version>
+</dependency>
+<dependency>
+    <groupId>org.dhatim</groupId>
+    <artifactId>fastexcel</artifactId>
+    <version>0.17.0</version>
+</dependency>
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>

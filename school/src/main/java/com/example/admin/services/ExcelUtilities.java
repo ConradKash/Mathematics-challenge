@@ -3,7 +3,9 @@ package com.example.admin.services;
 import com.example.admin.models.Registered;
 
 import org.apache.commons.compress.archivers.dump.InvalidFormatException;
+import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
@@ -11,61 +13,40 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.TreeMap;
 
 public class ExcelUtilities {
-    String filePath = System.getProperty("user.dir") + "/src/main/resources/registered_students.xlsx";
+    String filePath = "registered_students.xlsx";
 
-    public void writeToExcel(List<Registered> registeredList) throws InvalidFormatException {
-        File file = new File(filePath);
-        boolean fileExists = file.exists();
-        int lastRowNum = 0;
+    public void writeToExcel(Registered registered) throws EncryptedDocumentException, IOException {
+        // Blank workbook
+        XSSFWorkbook workbook = new XSSFWorkbook();
 
-        if (fileExists) {
-            try (Workbook existingWorkbook = WorkbookFactory.create(file)) {
-                Sheet existingSheet = existingWorkbook.getSheet("Registered Students");
-                lastRowNum = existingSheet.getLastRowNum() + 1;
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
+        Sheet sheet = workbook.createSheet("Registered Students");
+        int lastRowNum = sheet.getLastRowNum() + 1;
+        System.out.println("Last row number: " + lastRowNum);
+        Row row = sheet.createRow(++lastRowNum);
 
-        // Set the starting row number for new data
-        int rowNum = lastRowNum > 0 ? lastRowNum : 1;
-        try (Workbook workbook = new XSSFWorkbook()) {
-            Sheet sheet = workbook.createSheet("Registered Students");
-            // Create header row
-            Row headerRow = sheet.createRow(0);
-            headerRow.createCell(0).setCellValue("ID");
-            headerRow.createCell(1).setCellValue("User Name");
-            headerRow.createCell(1).setCellValue("First Name");
-            headerRow.createCell(2).setCellValue("Last Name");
-            headerRow.createCell(3).setCellValue("School ID");
-            headerRow.createCell(4).setCellValue("Profile Picture");
-            headerRow.createCell(5).setCellValue("Email Address");
-            headerRow.createCell(6).setCellValue("Date of Birth");
-            headerRow.createCell(7).setCellValue("Password");
+        row.createCell(1).setCellValue(registered.getUserName());
+        row.createCell(2).setCellValue(registered.getFirstName());
+        row.createCell(3).setCellValue(registered.getLastName());
+        row.createCell(4).setCellValue(registered.getSchoolId());
+        row.createCell(5).setCellValue(registered.getProfilePicture());
+        row.createCell(6).setCellValue(registered.getEmailAddress());
+        row.createCell(7).setCellValue(registered.getDateOfBirth());
+        row.createCell(8).setCellValue(registered.getPassword());
 
-            // Populate data rows
-            for (Registered registered : registeredList) {
-                Row row = sheet.createRow(rowNum++);
-                row.createCell(0).setCellValue(rowNum);
-                row.createCell(1).setCellValue(registered.getUserName());
-                row.createCell(2).setCellValue(registered.getFirstName());
-                row.createCell(3).setCellValue(registered.getLastName());
-                row.createCell(4).setCellValue(registered.getSchoolId());
-                row.createCell(5).setCellValue(registered.getProfilePicture());
-                row.createCell(6).setCellValue(registered.getEmailAddress());
-                row.createCell(7).setCellValue(registered.getDateOfBirth());
-                row.createCell(8).setCellValue(registered.getPassword());
-            }
-
-            // Write the workbook to the file
-            try (FileOutputStream fileOut = new FileOutputStream(filePath)) {
-                workbook.write(fileOut);
-            }
+        try {
+            FileOutputStream fileOut = new FileOutputStream(new File(filePath));
+            workbook.write(fileOut);
+            fileOut.close();
+            System.out.println("Excel file written successfully..");
         } catch (IOException e) {
             e.printStackTrace();
         }
+
     }
 
     public List<Registered> readFromExcel(Integer schoolId) throws InvalidFormatException {
@@ -102,7 +83,50 @@ public class ExcelUtilities {
         return registeredList;
     }
 
-    public Registered searchByUsername(String username) throws InvalidFormatException {
+    public void test() {
+        // Blank workbook
+        XSSFWorkbook workbook = new XSSFWorkbook();
+
+        // Create a blank sheet
+        XSSFSheet sheet = workbook.createSheet("Employee Data");
+
+        // Prepare data to be written as an Object[]
+        Map<String, Object[]> data = new TreeMap<String, Object[]>();
+        data.put("1", new Object[] { "ID", "NAME", "LASTNAME" });
+        data.put("2", new Object[] { 1, "Amit", "Shukla" });
+        data.put("3", new Object[] { 2, "Lokesh", "Gupta" });
+        data.put("4", new Object[] { 3, "John", "Adwards" });
+        data.put("5", new Object[] { 4, "Brian", "Schultz" });
+
+        // Iterate over data and write to sheet
+        Set<String> keyset = data.keySet();
+        int rownum = 0;
+        for (String key : keyset) {
+
+            Row row = sheet.createRow(rownum++);
+            Object[] objArr = data.get(key);
+            int cellnum = 0;
+            for (Object obj : objArr) {
+                Cell cell = row.createCell(cellnum++);
+                if (obj instanceof String)
+                    cell.setCellValue((String) obj);
+                else if (obj instanceof Integer)
+                    cell.setCellValue((Integer) obj);
+            }
+        }
+
+        // Write the workbook in file system
+        try {
+            FileOutputStream out = new FileOutputStream(new File("howtodoinjava_demo.xlsx"));
+            workbook.write(out);
+            out.close();
+            System.out.println("howtodoinjava_demo.xlsx written successfully on disk.");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public Registered searchByUsername(String username) {
         File file = new File(filePath);
         boolean fileExists = file.exists();
 
