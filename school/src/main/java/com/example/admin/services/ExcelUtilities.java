@@ -9,6 +9,7 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,21 +23,32 @@ public class ExcelUtilities {
 
     public void writeToExcel(Registered registered) throws EncryptedDocumentException, IOException {
         // Blank workbook
-        XSSFWorkbook workbook = new XSSFWorkbook();
+        while (filePath == null) {
+            try (XSSFWorkbook workbook = new XSSFWorkbook()) {
+                Sheet sheet = workbook.createSheet("Registered Students");
+                System.out.println("New File created successfully.." + sheet.getSheetName());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-        Sheet sheet = workbook.createSheet("Registered Students");
-        int lastRowNum = sheet.getLastRowNum() + 1;
+        }
+
+        FileInputStream fis = new FileInputStream(filePath);
+        Workbook workbook = WorkbookFactory.create(fis);
+        Sheet sheet = workbook.getSheet("Registered Students");
+
+        int lastRowNum = sheet.getLastRowNum();
         System.out.println("Last row number: " + lastRowNum);
         Row row = sheet.createRow(++lastRowNum);
 
-        row.createCell(1).setCellValue(registered.getUserName());
-        row.createCell(2).setCellValue(registered.getFirstName());
-        row.createCell(3).setCellValue(registered.getLastName());
-        row.createCell(4).setCellValue(registered.getSchoolId());
-        row.createCell(5).setCellValue(registered.getProfilePicture());
-        row.createCell(6).setCellValue(registered.getEmailAddress());
-        row.createCell(7).setCellValue(registered.getDateOfBirth());
-        row.createCell(8).setCellValue(registered.getPassword());
+        row.createCell(0).setCellValue(registered.getUserName());
+        row.createCell(1).setCellValue(registered.getFirstName());
+        row.createCell(2).setCellValue(registered.getLastName());
+        row.createCell(3).setCellValue(registered.getSchoolId());
+        row.createCell(4).setCellValue(registered.getProfilePicture());
+        row.createCell(5).setCellValue(registered.getEmailAddress());
+        row.createCell(6).setCellValue(registered.getDateOfBirth());
+        row.createCell(7).setCellValue(registered.getPassword());
 
         try {
             FileOutputStream fileOut = new FileOutputStream(new File(filePath));
@@ -45,6 +57,8 @@ public class ExcelUtilities {
             System.out.println("Excel file written successfully..");
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            workbook.close();
         }
 
     }
