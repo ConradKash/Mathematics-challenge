@@ -1,7 +1,9 @@
-package com.example.admin;
+package com.example.admin.clients;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
+
+import com.example.admin.User;
 
 public class ClientController {
     User user;

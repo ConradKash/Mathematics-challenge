@@ -1,4 +1,4 @@
-package com.example.admin;
+package com.example.admin.clients;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,19 +11,18 @@ import java.util.regex.Pattern;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.example.admin.services.Serializer;
+import com.example.admin.*;
+
 public class ClientInstance {
     String hostname;
     int port;
-    String clientId;
-    User user;
     byte cache;
-    boolean isStudent;
-    boolean isAuthenticated;
+    String clientId;
 
-    public ClientInstance(String hostname, int port, User user) {
+    public ClientInstance(String hostname, int port) {
         this.hostname = hostname;
         this.port = port;
-        this.user = user;
     }
 
     public static boolean isValid(String input) {
@@ -62,6 +61,7 @@ public class ClientInstance {
     public void start() throws IOException {
         try {
             Socket socket = new Socket(this.hostname, this.port);
+            User user = new User();
 
             try {
                 BufferedReader input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -74,9 +74,9 @@ public class ClientInstance {
 
                         try {
                             this.clientId = socket.getInetAddress().getHostAddress();
-                            Serializer serializer = new Serializer(this.user);
-                            System.out.print("[Enter the command] (" + this.user.username + "): ");
-                            ClientController clientController = new ClientController(this.user);
+                            Serializer serializer = new Serializer();
+                            System.out.print("[Enter the command] (" + user.username + "): ");
+                            ClientController clientController = new ClientController(user);
                             String regex = "^\\{.*\\}$";
                             Pattern pattern = Pattern.compile(regex);
 
@@ -87,26 +87,26 @@ public class ClientInstance {
                                         break label197;
                                     }
 
-                                    if (userInput.equals("logout") && this.user.isAuthenticated) {
+                                    if (userInput.equals("logout") && user.isAuthenticated) {
                                         System.out.println("Session successfully logged out");
-                                        this.user.logout();
+                                        user.logout();
                                         PrintStream var10000 = System.out;
-                                        String var10001 = !this.user.username.isBlank() ? this.user.username : null;
+                                        String var10001 = !user.username.isBlank() ? user.username : null;
                                         var10000.print("[Enter the command] (" + var10001 + "): ");
                                     } else {
                                         String serializedCommand = serializer.serialize(userInput);
                                         if (isValid(serializedCommand)) {
                                             output.println(serializedCommand);
                                             String response = input.readLine();
-                                            this.user = clientController.exec(response);
-                                            if (!pattern.matcher(this.user.output).matches()) {
-                                                System.out.println("\n" + this.user.output + "\n");
+                                            user = clientController.exec(response);
+                                            if (!pattern.matcher(user.output).matches()) {
+                                                System.out.println("\n" + user.output + "\n");
                                             } else {
-                                                JSONObject questions = new JSONObject(this.user.output);
-                                                JSONArray answerSet = this.displayQuestionSet(questions);
+                                                JSONObject questions = new JSONObject(user.output);
+                                                JSONArray answerSet = displayQuestionSet(questions);
                                                 JSONObject obj = new JSONObject();
                                                 obj.put("attempt", answerSet);
-                                                obj.put("participant_id", this.user.id);
+                                                obj.put("participant_id", user.id);
                                                 obj.put("command", "attempt");
                                                 obj.put("challenge_id", questions.getInt("challenge_id"));
                                                 obj.put("total_score", this.cache);
@@ -117,7 +117,7 @@ public class ClientInstance {
                                             System.out.println(serializedCommand);
                                         }
 
-                                        System.out.print("[Enter the command] (" + this.user.username + "): ");
+                                        System.out.print("[Enter the command] (" + user.username + "): ");
                                     }
                                 }
                             }

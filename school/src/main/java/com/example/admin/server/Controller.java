@@ -1,4 +1,4 @@
-package com.example.admin;
+package com.example.admin.server;
 
 import java.io.IOException;
 import java.sql.ResultSet;

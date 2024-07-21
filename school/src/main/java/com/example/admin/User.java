@@ -1,14 +1,14 @@
 package com.example.admin;
 
 public class User {
-    String username;
-    String email;
-    String regNo;
-    int id;
-    String schoolName;
-    boolean isAuthenticated = false;
-    boolean isStudent = true;
-    String output;
+    public String username;
+    public String email;
+    public String regNo;
+    public int id;
+    public String schoolName;
+    public boolean isAuthenticated = false;
+    public boolean isStudent = true;
+    public String output;
  
     public User() {
     }

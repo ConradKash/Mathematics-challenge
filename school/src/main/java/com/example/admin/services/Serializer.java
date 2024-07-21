@@ -1,14 +1,11 @@
-package com.example.admin;
+package com.example.admin.services;
 
 import java.util.Scanner;
 import org.json.JSONObject;
+import com.example.admin.User;
 
 public class Serializer {
     User user;
-
-    public Serializer(User user) {
-        this.user = user;
-    }
 
     public String login() {
         if (this.user.isAuthenticated) {
@@ -114,7 +111,7 @@ public class Serializer {
     }
 
     public static void main(String[] args) {
-        Serializer sample = new Serializer(new User());
+        Serializer sample = new Serializer();
         sample.serialize("login frank ogenrwothjimfrank@gmail.com");
     }
 }

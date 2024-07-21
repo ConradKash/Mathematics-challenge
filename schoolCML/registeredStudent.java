@@ -1,7 +1,6 @@
 import java.io.*;
 import java.util.*;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
 public class registeredStudent {
     private String username;
     private String firstname;
@@ -75,50 +74,5 @@ public class registeredStudent {
 
     public void setImageFile(String imageFile) {
         this.imageFile = imageFile;
-    }
-
-    public void saveStudent() {
-        try {
-            File file = new File("students.xlsx");
-            if (!file.exists()) {
-                Workbook workbook = new XSSFWorkbook();
-                Sheet sheet = workbook.createSheet("Students");
-                Row headerRow = sheet.createRow(0);
-                headerRow.createCell(0).setCellValue("ID");
-                headerRow.createCell(1).setCellValue("Username");
-                headerRow.createCell(2).setCellValue("First Name");
-                headerRow.createCell(3).setCellValue("Last Name");
-                headerRow.createCell(4).setCellValue("Email Address");
-                headerRow.createCell(5).setCellValue("Date of Birth");
-                headerRow.createCell(6).setCellValue("School Registration Number");
-                headerRow.createCell(7).setCellValue("Image File");
-                FileOutputStream outputStream = new FileOutputStream(file);
-                workbook.write(outputStream);
-                outputStream.close();
-            }
-
-            Workbook workbook = WorkbookFactory.create(file);
-            Sheet sheet = workbook.getSheet("Students");
-            int lastRowNum = sheet.getLastRowNum();
-            Row newRow = sheet.createRow(lastRowNum + 1);
-            newRow.createCell(0).setCellValue(lastRowNum + 1);
-            newRow.createCell(1).setCellValue(username);
-            newRow.createCell(2).setCellValue(firstname);
-            newRow.createCell(3).setCellValue(lastname);
-            newRow.createCell(4).setCellValue(emailAddress);
-            newRow.createCell(5).setCellValue(dateOfBirth.toString());
-            newRow.createCell(6).setCellValue(school_registration_number);
-            newRow.createCell(7).setCellValue(imageFile);
-
-            FileOutputStream outputStream = new FileOutputStream(file);
-            workbook.write(outputStream);
-            outputStream.close();
-
-            FileWriter writer = new FileWriter("students.txt", true);
-            writer.write(username + "," + firstname + "," + lastname + "," + emailAddress + "," + dateOfBirth + "," + school_registration_number + "," + imageFile + "\n");
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
     }
 }
