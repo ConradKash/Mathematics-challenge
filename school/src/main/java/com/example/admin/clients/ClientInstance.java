@@ -76,7 +76,7 @@ public class ClientInstance {
                             this.clientId = socket.getInetAddress().getHostAddress();
                             Serializer serializer = new Serializer();
                             System.out.print("[Enter the command] (" + user.username + "): ");
-                            ClientController clientController = new ClientController(user);
+                            ClientController clientController = new ClientController();
                             String regex = "^\\{.*\\}$";
                             Pattern pattern = Pattern.compile(regex);
 
@@ -98,6 +98,8 @@ public class ClientInstance {
                                         if (isValid(serializedCommand)) {
                                             output.println(serializedCommand);
                                             String response = input.readLine();
+                                            System.out.println(
+                                                    "this is what is passed to the client " + response);
                                             user = clientController.exec(response);
                                             if (!pattern.matcher(user.output).matches()) {
                                                 System.out.println("\n" + user.output + "\n");

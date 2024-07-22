@@ -8,10 +8,8 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import com.example.admin.services.*;
 
-import com.example.admin.services.Email;
-import com.example.admin.services.LocalStorage;
-
 public class Controller {
+
     JSONObject obj;
 
     public Controller(JSONObject obj) {
@@ -19,6 +17,8 @@ public class Controller {
     }
 
     private JSONObject login(JSONObject obj) throws SQLException, ClassNotFoundException {
+        System.out.println("We are in server");
+        Class.forName("com.mysql.cj.jdbc.Driver");
         DbConnection dbConnection = new DbConnection();
         JSONArray tokens = obj.getJSONArray("tokens");
         String username = tokens.get(1).toString();
@@ -27,13 +27,13 @@ public class Controller {
         clientResponse.put("command", "login");
         clientResponse.put("username", username);
         clientResponse.put("email", email);
-        String readParticipantQuery = "SELECT * FROM participant";
+        String readParticipantQuery = "SELECT * FROM participants";
         ResultSet participantResultSet = dbConnection.read(readParticipantQuery);
 
         String regNo;
         do {
             if (!participantResultSet.next()) {
-                regNo = "SELECT * FROM school";
+                regNo = "SELECT * FROM school_representatives";
                 ResultSet representativeResultSet = dbConnection.read(regNo);
 
                 do {
@@ -48,7 +48,7 @@ public class Controller {
                         || !email.equals(representativeResultSet.getString("representativeEmail")));
 
                 String schoolName = representativeResultSet.getString("name");
-                regNo = representativeResultSet.getString("regNo");
+                regNo = representativeResultSet.getString("id");
                 clientResponse.put("participant_id", 0);
                 clientResponse.put("schoolName", schoolName);
                 clientResponse.put("regNo", regNo);
@@ -60,9 +60,9 @@ public class Controller {
         } while (!username.equals(participantResultSet.getString("username"))
                 || !email.equals(participantResultSet.getString("emailAddress")));
 
-        regNo = participantResultSet.getString("regNo");
-        clientResponse.put("participant_id", participantResultSet.getInt("participant_id"));
-        clientResponse.put("regNo", regNo);
+        regNo = participantResultSet.getString("userName=");
+        clientResponse.put("participant_id", participantResultSet.getInt("id"));
+        clientResponse.put("regNo", participantResultSet.getInt("school_id"));
         clientResponse.put("schoolName", "undefined");
         clientResponse.put("isStudent", true);
         clientResponse.put("isAuthenticated", true);
@@ -72,8 +72,7 @@ public class Controller {
 
     private JSONObject register(JSONObject obj)
             throws IOException, MessagingException, SQLException, ClassNotFoundException {
-        Email emailAgent = new Email();
-        DbConnection dbConnection = new DbConnection();
+        System.out.println("We are here");
         JSONArray tokens = obj.getJSONArray("tokens");
         JSONObject participantObj = new JSONObject();
         participantObj.put("username", tokens.get(1));
@@ -85,27 +84,9 @@ public class Controller {
         participantObj.put("imagePath", tokens.get(7));
         JSONObject clientResponse = new JSONObject();
         clientResponse.put("command", "register");
-        ResultSet rs = dbConnection.getRepresentative(participantObj.getString("regNo"));
-        if (rs.next()) {
-            String representativeEmail = rs.getString("representativeEmail");
-            LocalStorage localStorage = new LocalStorage("participants.json");
-            if (!localStorage.read().toString().contains(participantObj.toString())) {
-                localStorage.add(participantObj);
-                clientResponse.put("status", true);
-                clientResponse.put("reason", "Participant created successfully awaiting representative approval");
-                emailAgent.sendParticipantRegistrationRequestEmail(representativeEmail,
-                        participantObj.getString("emailAddress"), participantObj.getString("username"));
-                return clientResponse;
-            } else {
-                clientResponse.put("status", false);
-                clientResponse.put("reason", "Participant creation failed found an existing participant object");
-                return clientResponse;
-            }
-        } else {
-            clientResponse.put("status", false);
-            clientResponse.put("reason", "school does not exist in our database");
-            return clientResponse;
-        }
+        clientResponse.put("status", true);
+        clientResponse.put("reason", "Participant created successfully awaiting representative approval");
+        return clientResponse;
     }
 
     private JSONObject attemptChallenge(JSONObject obj) throws SQLException, ClassNotFoundException {

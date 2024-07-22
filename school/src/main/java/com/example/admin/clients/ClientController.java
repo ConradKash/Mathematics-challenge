@@ -8,10 +8,6 @@ import com.example.admin.User;
 public class ClientController {
     User user;
 
-    public ClientController(User user) {
-        this.user = user;
-    }
-
     private User login(JSONObject response) {
         if (response.getBoolean("status")) {
             this.user.id = response.getInt("participant_id");
@@ -21,6 +17,7 @@ public class ClientController {
             this.user.schoolName = response.getString("schoolName");
             this.user.isStudent = response.getBoolean("isStudent");
             this.user.isAuthenticated = response.getBoolean("isAuthenticated");
+            System.out.println("login funv");
             this.user.output = "[+] Successfully logged in as a " + this.user.username
                     + (this.user.isStudent ? "(student)" : "(representative)");
         } else {
@@ -123,6 +120,7 @@ public class ClientController {
         JSONObject response = new JSONObject(responseData);
         switch (response.get("command").toString()) {
             case "login":
+                System.out.println("This is the switch");
                 return this.login(response);
             case "register":
                 return this.register(response);

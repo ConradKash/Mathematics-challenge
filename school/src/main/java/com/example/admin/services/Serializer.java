@@ -2,39 +2,32 @@ package com.example.admin.services;
 
 import java.util.Scanner;
 import org.json.JSONObject;
-import com.example.admin.User;
 
 public class Serializer {
-    User user;
-
     public String login() {
-        if (this.user.isAuthenticated) {
-            return "Session already authenticated";
-        } else {
-            @SuppressWarnings("resource")
-            Scanner scanner = new Scanner(System.in);
-            System.out.println("Please enter user login details (username and email)");
-            System.out.print("Username: ");
-            String username = scanner.nextLine();
-            System.out.print("Email: ");
-            String email = scanner.nextLine();
-            System.out.println("\n");
-            String[] tokens = new String[] { "login", username, email };
-            JSONObject obj = new JSONObject();
-            obj.put("command", "login");
-            obj.put("isAuthenticated", false);
-            obj.put("tokens", tokens);
-            obj.put("isStudent", false);
-            return obj.toString(4);
-        }
+        @SuppressWarnings("resource")
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Please enter user login details (username and email)");
+        System.out.print("Username: ");
+        String username = scanner.nextLine();
+        System.out.print("Email: ");
+        String email = scanner.nextLine();
+        System.out.println("\n");
+        String[] tokens = new String[] { "login", username, email };
+        JSONObject obj = new JSONObject();
+        obj.put("command", "login");
+        obj.put("isAuthenticated", false);
+        obj.put("tokens", tokens);
+        obj.put("isStudent", false);
+        return obj.toString(4);
     }
 
     public String register(String[] arr) {
         JSONObject obj = new JSONObject();
+
         obj.put("command", "register");
-        obj.put("isAuthenticated", this.user.isAuthenticated);
         obj.put("tokens", arr);
-        obj.put("isStudent", this.user.isStudent);
+        System.out.println(obj.toString());
         return obj.toString(4);
     }
 
@@ -48,9 +41,9 @@ public class Serializer {
     public String viewApplicants() {
         JSONObject obj = new JSONObject();
         obj.put("command", "viewApplicants");
-        obj.put("isAuthenticated", this.user.isAuthenticated);
-        obj.put("isStudent", this.user.isStudent);
-        obj.put("regNo", this.user.regNo);
+        // obj.put("isAuthenticated", this.user.isAuthenticated);
+        // obj.put("isStudent", this.user.isStudent);
+        // obj.put("regNo", this.user.regNo);
         return obj.toString(4);
     }
 
@@ -58,7 +51,7 @@ public class Serializer {
         JSONObject obj = new JSONObject();
         obj.put("command", "confirm");
         obj.put("username", arr[2]);
-        obj.put("regNo", this.user.regNo);
+        // obj.put("regNo", this.user.regNo);
         obj.put("confirm", arr[1].toLowerCase().equals("yes"));
         obj.put("tokens", arr);
         return obj.toString(4);
@@ -67,25 +60,24 @@ public class Serializer {
     public String viewChallenges() {
         JSONObject obj = new JSONObject();
         obj.put("command", "viewChallenges");
-        obj.put("isAuthenticated", this.user.isAuthenticated);
-        obj.put("isStudent", this.user.isStudent);
+        // obj.put("isAuthenticated", this.user.isAuthenticated);
+        // obj.put("isStudent", this.user.isStudent);
         return obj.toString(4);
     }
 
     public String logout() {
-        this.user.logout();
+        // this.user.logout();
         return "Successfully logged out";
     }
 
     public String serialize(String command) {
         String[] tokens = command.split("\\s+");
-        if (!this.user.isAuthenticated && tokens[0].equals("register")) {
+        if (tokens[0].equals("register")) {
+            
             return this.register(tokens);
-        } else if (!this.user.isAuthenticated && tokens[0].equals("login")) {
+        } else if (tokens[0].equals("login")) {
             return this.login();
-        } else if (!this.user.isAuthenticated) {
-            return "Session unauthenticated first login by entering command login";
-        } else if (this.user.isStudent) {
+        } else if (tokens[0].equals("successlogin")) {
             switch (tokens[0]) {
                 case "logout":
                     return this.logout();
