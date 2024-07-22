@@ -64,6 +64,10 @@ class ChallengeController extends Controller
         Excel::import(new challenges($challenge->id), $file);
         //Redirect back with success message after validating
         return redirect()->route('challenges.index');
+        //Redirect back with success message after validating
+        return redirect()->back()->with('success', 'Successfully uploaded');
+        //Handle any exceptions that occur during the import process
+        return redirect()->back()->with('error', 'Error got' . $e->getMessage());
     }
 
     /**
