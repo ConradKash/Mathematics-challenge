@@ -62,6 +62,7 @@ class ChallengeController extends Controller
         $file = $request->file('file');
         // Process the Excel file to check if file exists in the request and prevents errors.
         Excel::import(new challenges($challenge->id), $file);
+        // Solved
         //Redirect back with success message after validating
         return redirect()->route('challenges.index');
         //Redirect back with success message after validating
