@@ -70,5 +70,16 @@ class SchoolController extends Controller
         return redirect()->route('page.school')
             ->with('success', 'School deleted successfully.');
     }
+    public function rankings()
+    {
+        // Fetch schools with their related attempts and sort by average score
+        $schools = School::with(['attempts'])
+            ->get()
+            ->sortByDesc(function ($school) {
+                return $school->averageScore();
+            });
+
+        return view('schools.rankings', compact('schools'));
+    }
 }
 

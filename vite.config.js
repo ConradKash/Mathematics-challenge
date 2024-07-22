@@ -8,6 +8,7 @@ export default defineConfig({
             input: [
                 'resources/sass/app.scss',
                 'resources/js/app.js',
+                'resources/js/chart.js' // Include your chart.js file here
             ],
             refresh: true,
         }),

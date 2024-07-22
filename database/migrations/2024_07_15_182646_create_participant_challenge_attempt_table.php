@@ -3,7 +3,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateChallengeAttemptTable extends Migration
+class CreateParticipantChallengeAttemptsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,10 +12,10 @@ class CreateChallengeAttemptTable extends Migration
      */
     public function up()
     {
-        Schema::create('challenge_attempt', function (Blueprint $table) {
+        Schema::create('participant_challenge_attempts', function (Blueprint $table) {
             $table->id('attempt_id');
             $table->foreignId('participant_id')->constrained('participant')->onDelete('cascade');
-            $table->foreignId('challenge_id')->constrained('challenge')->onDelete('cascade');
+            $table->foreignId('challenge_id')->constrained('challenges')->onDelete('cascade');
             $table->integer('score');
             $table->integer('total_score');
             $table->timestamps();
@@ -29,6 +29,6 @@ class CreateChallengeAttemptTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('challenge_attempt');
+        Schema::dropIfExists('participant_challenge_attempts');
     }
 }

@@ -9,6 +9,7 @@
             <table class="table">
                 <thead>
                     <tr>
+                        <th>Id</th>
                         <th>Title</th>
                         <th>Description</th>
                         <th>Starting Date</th>
@@ -20,15 +21,19 @@
                 <tbody>
                     @foreach($challenges as $challenge)
                     <tr>
+                        <td>{{ $challenge->challenge_id }}</td>
                         <td>{{ $challenge->title }}</td>
                         <td>{{ $challenge->description }}</td>
                         <td>{{ $challenge->starting_date }}</td>
                         <td>{{ $challenge->closing_date }}</td>
                         <td>{{ $challenge->duration_minutes }}</td>
                         <td>
-                            <a href="{{ route('challenges.show', $challenge->id) }}" class="btn btn-info">View</a>
-                            <a href="{{ route('challenges.edit', $challenge->id) }}" class="btn btn-warning">Edit</a>
-                            <form action="{{ route('challenges.destroy', $challenge->id) }}" method="POST" style="display:inline-block;">
+                        
+                        <a href="{{ route('challenges.view_report', $challenge->challenge_id) }}" class="btn btn-primary">Generate Report</a>
+                        <a href="{{ route('challenges.winners', $challenge->challenge_id) }}" class="btn btn-success">View Winners</a>
+
+                            <a href="{{ route('challenges.edit', $challenge->challenge_id) }}" class="btn btn-warning">Edit</a>
+                            <form action="{{ route('challenges.destroy', $challenge->challenge_id) }}" method="POST" style="display:inline-block;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Delete</button>

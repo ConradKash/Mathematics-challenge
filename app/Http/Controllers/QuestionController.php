@@ -2,8 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Question;
-use App\Models\Answer;
+use App\Models\QuestionAnswerRecord;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel; // Assuming you're using Maatwebsite Excel package
 
@@ -12,17 +11,17 @@ class QuestionController extends Controller
     // Method to load the view for questions and answers
     public function questAnswer()
     {
+        $questions = QuestionAnswerRecord::paginate(10); 
         $title = "Questions and Answers";
-        $questions = Question::with('answers')->get();
+        $questions = QuestionAnswerRecord::all();
         return view('pages.questAnswer', compact('title', 'questions'));
     }
 
-   
-
-    // Method to fetch questions and thveir answers
+    // Method to fetch questions and their answers
     public function index()
     {
-        $questions = Question::with('answers')->get();
+        $questions = QuestionAnswerRecord::paginate(10); 
+        $questions = QuestionAnswerRecord::all();
         return view('questions.index', compact('questions'));
     }
 
@@ -40,14 +39,21 @@ class QuestionController extends Controller
 
         // Iterate through each question row and create Question and Answer models
         foreach ($questions[0] as $questionRow) {
-            $question = Question::create(['content' => $questionRow[0]]);
-            $answerRow = $answers[0]->firstWhere('0', $questionRow[0]);
- 
-            Answer::create([ 
-                'question_id' => $question->id,
-                'content' => $answerRow[1],
-                'marks' => intval($answerRow[2]), // Ensure marks is an integer
+            $answerRow = $answers[0]->firstWhere(0, $questionRow[0]);
+            $question = QuestionAnswerRecord::create([
+                'question' => $questionRow[0],
+                'answer' => $answerRow[1],
+                'score' => intval($answerRow[2]),
             ]);
+
+            $answerRow = $answers[0]->firstWhere(0, $questionRow[0]);
+
+            if ($answerRow) {
+                $question->update([
+                    'answer' => $answerRow[1],
+                    'score' => intval($answerRow[2]), // Ensure score is an integer
+                ]);
+            }
         }
 
         return redirect()->route('questions.index')->with('success', 'Questions and answers uploaded successfully.');

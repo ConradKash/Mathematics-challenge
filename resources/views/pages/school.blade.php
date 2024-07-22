@@ -19,7 +19,7 @@
                 <tr>
                     <td>{{ $school->name }}</td>
                     <td>{{ $school->district }}</td>
-                    <td>{{ $school->school_registration_number }}</td>
+                    <td>{{ $school->registration_number }}</td>
                     <td>{{ $school->representative_email }}</td>
                     <td>{{ $school->representative_name }}</td>
                     <td>{{ $school->validated ? 'Yes' : 'No' }}</td>

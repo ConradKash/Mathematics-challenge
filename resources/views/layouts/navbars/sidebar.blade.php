@@ -51,19 +51,6 @@ Tip 2: you can also add an image using data-image tag
                     <p>{{ __("School") }}</p>
                 </a>
             </li>
-            
-            <li class="nav-item @if($activePage == 'comp') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'comp')}}">
-                    <i class="nc-icon nc-atom"></i>
-                    <p>{{ __("Competition") }}</p>
-                </a>
-            </li>
-            <li class="nav-item @if($activePage == 'challenge') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'challenge')}}">
-                    <i class="nc-icon nc-paper-2"></i>
-                    <p>{{ __("Challenge") }}</p>
-                </a>
-            </li>
             <li class="nav-item @if($activePage == 'questAnswer') active @endif">
                 <a class="nav-link" href="{{route('page.index', 'questAnswer')}}">
                     <i class="nc-icon nc-atom"></i>
@@ -71,21 +58,28 @@ Tip 2: you can also add an image using data-image tag
                 </a>
             </li>
             <li class="nav-item @if($activePage == 'challenges') active @endif">
-                <a class="nav-link" href="{{route('page.challenges', 'challenges')}}">
+                <a class="nav-link" href="{{route('page.index', 'challenges')}}">
                     <i class="nc-icon nc-atom"></i>
                     <p>{{ __("challenges") }}</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'maps') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'maps')}}">
-                    <i class="nc-icon nc-pin-3"></i>
-                    <p>{{ __("Maps") }}</p>
+            
+           <li  class="nav-item @if($activePage == 'analyticsAll') active @endif">
+                <a class="nav-link" href="{{route('page.index', 'analyticsAll')}}">
+                 <i class="nc-icon nc-chart-bar-32"></i>
+                <p>All Analytics</p>
+            </a>
+            </li>
+            <li class="nav-item @if($activePage == 'averageScores') active @endif">
+                <a class="nav-link" href="{{route('page.index', 'averageScores')}}">
+                    <i class="nc-icon nc-bell-55"></i>
+                    <p>{{ __("Analytics") }}</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'notifications') active @endif">
-                <a class="nav-link" href="{{route('page.index', 'notifications')}}">
+            <li class="nav-item @if($activePage == 'SchoolRankings') active @endif">
+                <a class="nav-link" href="{{route('page.index', 'schoolRankings')}}">
                     <i class="nc-icon nc-bell-55"></i>
-                    <p>{{ __("Notifications") }}</p>
+                    <p>{{ __("Analytics") }}</p>
                 </a>
             </li>
         </ul>

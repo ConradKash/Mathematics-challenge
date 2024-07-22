@@ -2,7 +2,7 @@
 
 @section('content')
     <h1>Edit Challenge</h1>
-    <form action="{{ route('challenges.update', $challenge->id) }}" method="POST">
+    <form action="{{ route('challenges.update', $challenge->challenge_id) }}" method="POST">
         @csrf
         @method('PUT')
         <div class="form-group">
@@ -11,7 +11,7 @@
         </div>
         <div class="form-group">
             <label for="description">Description</label>
-            <textarea name="description" class="form-control" required>{{ $challenge->description }}</textarea>
+            <input type="text" name="description" class="form-control" value="{{ $challenge->description}}" required>
         </div>
         <div class="form-group">
             <label for="starting_date">Starting Date</label>

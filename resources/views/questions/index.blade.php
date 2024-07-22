@@ -1,7 +1,6 @@
 @extends('layouts.app', ['activePage' => 'questions', 'title' => 'Light Bootstrap Dashboard Laravel by Creative Tim & UPDIVISION', 'navName' => 'Uploads', 'activeButton' => 'laravel'])
 
 
-
 @section('content')
 <div class="container">
     <div class="card">
@@ -9,30 +8,31 @@
             <h4>Questions and Answers</h4>
         </div>
         <div class="card-body">
-            @foreach ($questions as $question)
-                <div class="mb-4">
-                    <h5>Question:</h5>
-                    <p>{{ $question->content }}</p>
-
-                    @if($question->answers->isEmpty())
-                        <p class="text-muted">No answers found for this question.</p>
-                    @else
-                        <h6>Answers:</h6>
-                        <ul class="list-group">
-                            @foreach ($question->answers as $answer)
-                                <li class="list-group-item">
-                                    <strong>Answer:</strong> {{ $answer->content }}<br>
-                                    <strong>Marks:</strong> {{ $answer->marks }}
-                                </li>
-                            @endforeach
-                        </ul>
-                    @endif
-                </div>
-                <hr>
-            @endforeach
+            @if (count($questions) > 0)
+            <div class="table-responsive">
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Question</th>
+                            <th>Answer</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($questions as $question)
+                        <tr>
+                            <td>{{ $question->question }}</td>
+                            <td>{{ $question->answer }}</td>
+                            <td>{{ $question->score }}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+            @else
+            <p>No questions and answers found.</p>
+            @endif
         </div>
     </div>
 </div>
 @endsection
-
-
