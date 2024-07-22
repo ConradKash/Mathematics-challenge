@@ -6,11 +6,11 @@ We recommend installing this preset on a project that you are starting from scra
 
 If you don't already have an Apache local environment with PHP and MySQL, use one of the following links:
 
- - Windows: https://updivision.com/blog/post/beginner-s-guide-to-setting-up-your-local-development-environment-on-windows
- - Linux: https://howtoubuntu.org/how-to-install-lamp-on-ubuntu
- - Mac: https://wpshout.com/quick-guides/how-to-install-mamp-on-your-mac/
+-   Windows: https://updivision.com/blog/post/beginner-s-guide-to-setting-up-your-local-development-environment-on-windows
+-   Linux: https://howtoubuntu.org/how-to-install-lamp-on-ubuntu
+-   Mac: https://wpshout.com/quick-guides/how-to-install-mamp-on-your-mac/
 
-Also, you will need to install Composer: https://getcomposer.org/doc/00-intro.md   
+Also, you will need to install Composer: https://getcomposer.org/doc/00-intro.md  
 And Laravel: https://laravel.com/docs/9.x/installation
 
 ## Installation
@@ -19,11 +19,11 @@ After initializing a fresh instance of Laravel (and making all the necessary con
 
 ### Via composer
 
-1. `Cd` to your Laravel app  
+1. `Cd` to your Laravel app
 2. Type in your terminal: `composer require laravel/ui` and `php artisan ui vue --auth`
 3. Install this preset via `composer require laravel-frontend-presets/light-bootstrap`. No need to register the service provider. Laravel 9.x can auto detect the package.
 4. Run `php artisan ui light-bootstrap` command to install the Light Bootstrap preset. This will install all the necessary assets and also the custom auth views, it will also add the auth route in `routes/web.php`
-(NOTE: If you run this command several times, be sure to clean up the duplicate Auth entries in routes/web.php)
+   (NOTE: If you run this command several times, be sure to clean up the duplicate Auth entries in routes/web.php)
 5. In your terminal run `composer dump-autoload`
 6. Run `php artisan migrate --seed` to create basic users table
 
@@ -31,17 +31,17 @@ After initializing a fresh instance of Laravel (and making all the necessary con
 
 Register a user or login using **admin@lightbp.com** and **secret** and start testing the preset (make sure to run the migrations and seeders for these credentials to be available).
 
-Besides the dashboard and the auth pages this preset also has an edit profile page. All the necessary files (controllers, requests, views) are installed out of the box and all the needed routes are added to `routes/web.php`. Keep in mind that all of the features can be viewed once you login using the credentials provided above or by registering your own user. 
+Besides the dashboard and the auth pages this preset also has an edit profile page. All the necessary files (controllers, requests, views) are installed out of the box and all the needed routes are added to `routes/web.php`. Keep in mind that all of the features can be viewed once you login using the credentials provided above or by registering your own user.
 
 ### Dashboard
 
-You can access the dashboard either by using the "**Dashboard**" link in the left sidebar or by adding **/home** in the url. 
+You can access the dashboard either by using the "**Dashboard**" link in the left sidebar or by adding **/home** in the url.
 
 ### Profile edit
 
 You have the option to edit the current logged in user's profile (change name, email and password). To access this page just click the "**User profile**" link in the left sidebar or by adding **/profile** in the url.
 
-The `App\Http\Controllers\ProfileController` handles the update of the user information. 
+The `App\Http\Controllers\ProfileController` handles the update of the user information.
 
 ```
 public function update(ProfileRequest $request)
@@ -64,26 +64,29 @@ public function rules()
     ];
 }
 ```
+
 ## Table of Contents
 
-* [Demo](#demo)
-* [Documentation](#documentation)
-* [File Structure](#file-structure)
-* [Browser Support](#browser-support)
-* [Resources](#resources)
+-   [Demo](#demo)
+-   [Documentation](#documentation)
+-   [File Structure](#file-structure)
+-   [Browser Support](#browser-support)
+-   [Resources](#resources)
 
 ## Demo
 
-| Register | Login | Dashboard |
-| --- | --- | ---  |
-| [![Register](screens/Register.png)](https://light-bootstrap-dashboard-laravel.creative-tim.com/register?ref=lbdl-readme)  | [![Login](screens/Login.png)](https://light-bootstrap-dashboard-laravel.creative-tim.com/login?ref=lbdl-readme)  | [![Dashboard](screens/Dashboard.png)](https://light-bootstrap-dashboard-laravel.creative-tim.com/?ref=lbdl-readme)
+| Register                                                                                                                 | Login                                                                                                           | Dashboard                                                                                                          |
+| ------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| [![Register](screens/Register.png)](https://light-bootstrap-dashboard-laravel.creative-tim.com/register?ref=lbdl-readme) | [![Login](screens/Login.png)](https://light-bootstrap-dashboard-laravel.creative-tim.com/login?ref=lbdl-readme) | [![Dashboard](screens/Dashboard.png)](https://light-bootstrap-dashboard-laravel.creative-tim.com/?ref=lbdl-readme) |
 
-| Profile Page | Users Page | Tables Page  |
-| --- | --- | ---  |
-| [![Profile Page](screens/Profile.png)](https://light-bootstrap-dashboard-laravel.creative-tim.com/profile?ref=lbdlp-readme)  | [![Users Page](screens/Users.png)](https://light-bootstrap-dashboard-laravel.creative-tim.com/user?ref=lbdl-readme) | [![Tables Page](screens/Tables.png)](https://light-bootstrap-dashboard-laravel.creative-tim.com/table-list?ref=lbdl-readme)
+| Profile Page                                                                                                                | Users Page                                                                                                          | Tables Page                                                                                                                 |
+| --------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------- |
+| [![Profile Page](screens/Profile.png)](https://light-bootstrap-dashboard-laravel.creative-tim.com/profile?ref=lbdlp-readme) | [![Users Page](screens/Users.png)](https://light-bootstrap-dashboard-laravel.creative-tim.com/user?ref=lbdl-readme) | [![Tables Page](screens/Tables.png)](https://light-bootstrap-dashboard-laravel.creative-tim.com/table-list?ref=lbdl-readme) |
+
 [View More](https://light-bootstrap-dashboard-laravel.creative-tim.com/?ref=lbdl-readme)
 
 ## File Structure
+
 ```
 +--- app
 │   ├── Console
@@ -343,18 +346,16 @@ At present, we officially aim to support the last two versions of the following 
 
 <img src="https://github.com/creativetimofficial/public-assets/blob/master/logos/chrome-logo.png?raw=true" width="64" height="64"> <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/firefox-logo.png" width="64" height="64"> <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/edge-logo.png" width="64" height="64"> <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/safari-logo.png" width="64" height="64"> <img src="https://raw.githubusercontent.com/creativetimofficial/public-assets/master/logos/opera-logo.png" width="64" height="64">
 
-
 ## Resources
-- Demo: <https://www.creative-tim.com/live/light-bootstrap-dashboard-laravel?ref=lbdl-readme>
-- Download Page: <https://www.creative-tim.com/product/light-bootstrap-dashboard-laravel?ref=lbdl-readme>
-- Documentation: <https://www.creative-tim.com/live/light-bootstrap-dashboard-laravel/?start-page=/docs/tutorial-components.html&ref=lbdl-readme>
-- License Agreement: <https://www.creative-tim.com/license?ref=lbdl-readme>
-- Support: <https://www.creative-tim.com/contact-us?ref=lbdl-readme>
-- Issues: [Github Issues Page](https://github.com/laravel-frontend-presets/light-bootstrap-dashboard-laravel/issues)
-- **Dashboards:**
 
-| HTML | LARAVEL |
-| --- | --- |
-| [![Light Bootstrap Dashboard HTML](https://s3.amazonaws.com/creativetim_bucket/products/32/original/opt_lbd_thumbnail.jpg?1513017628)](https://demos.creative-tim.com/light-bootstrap-dashboard/examples/dashboard.html?ref=lbdl-readme) | [![Light Bootstrap Dashboard Laravel](https://s3.amazonaws.com/creativetim_bucket/products/213/original/opt_lbd_laravel_thumbnail.jpg?1567087339)](https://www.creative-tim.com/live/light-bootstrap-dashboard-laravel?ref=lbdl-readme)
+-   Demo: <https://www.creative-tim.com/live/light-bootstrap-dashboard-laravel?ref=lbdl-readme>
+-   Download Page: <https://www.creative-tim.com/product/light-bootstrap-dashboard-laravel?ref=lbdl-readme>
+-   Documentation: <https://www.creative-tim.com/live/light-bootstrap-dashboard-laravel/?start-page=/docs/tutorial-components.html&ref=lbdl-readme>
+-   License Agreement: <https://www.creative-tim.com/license?ref=lbdl-readme>
+-   Support: <https://www.creative-tim.com/contact-us?ref=lbdl-readme>
+-   Issues: [Github Issues Page](https://github.com/laravel-frontend-presets/light-bootstrap-dashboard-laravel/issues)
+-   **Dashboards:**
 
-
+| HTML                                                                                                                                                                                                                                     | LARAVEL                                                                                                                                                                                                                                 |
+| ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [![Light Bootstrap Dashboard HTML](https://s3.amazonaws.com/creativetim_bucket/products/32/original/opt_lbd_thumbnail.jpg?1513017628)](https://demos.creative-tim.com/light-bootstrap-dashboard/examples/dashboard.html?ref=lbdl-readme) | [![Light Bootstrap Dashboard Laravel](https://s3.amazonaws.com/creativetim_bucket/products/213/original/opt_lbd_laravel_thumbnail.jpg?1567087339)](https://www.creative-tim.com/live/light-bootstrap-dashboard-laravel?ref=lbdl-readme) |

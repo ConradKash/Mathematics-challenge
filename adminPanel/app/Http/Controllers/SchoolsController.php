@@ -31,7 +31,6 @@ class SchoolsController extends Controller
     public function save()
     {
         $school = new School();
-        $school->id = $school->id;
         $school->name = request()->get('schoolName');
         $school->district = request()->get('district');
         $school->save();
