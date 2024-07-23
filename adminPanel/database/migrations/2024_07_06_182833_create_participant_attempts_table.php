@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('participant_id');
             $table->foreign('participant_id')->references('id')->on('participants')->onDelete('cascade')->OnUpdate('cascade');
+            $table->unsignedBigInteger('question_id');
+            $table->foreign('question_id')->references('id')->on('questions')->onDelete('cascade')->OnUpdate('cascade');
             $table->unsignedBigInteger('attempt_id');
             $table->foreign('attempt_id')->references('id')->on('attempts')->onDelete('cascade')->OnUpdate('cascade');
             $table->unsignedBigInteger('score');
