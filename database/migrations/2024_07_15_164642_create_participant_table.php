@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('lastname');
             $table->string('emailAddress');
             $table->date('dob');
-            $table->string('registration_number');
+            $table->string('regNo');
             $table->string('imagePath')->nullable();
             $table->timestamps();
         });

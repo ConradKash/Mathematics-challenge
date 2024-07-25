@@ -9,7 +9,7 @@
     <h3>Challenges</h3>
     @foreach ($challenges as $challenge)
         <div>
-            <h4>{{ $challenge->name }}</h4>
+            <h4>{{ $challenge->title }}</h4>
             <a href="{{ route('analytics.worstPerformingSchools', ['challengeId' => $challenge->challenge_id]) }}" class="btn btn-danger">
                 View Worst Performing Schools
             </a>
@@ -27,7 +27,7 @@
         <tbody>
             @foreach ($averageScores as $score)
                 <tr>
-                    <td>{{ $score->challenge->name }}</td>
+                    <td>{{ $score->challenge->title }}</td>
                     <td>{{ $score->average_score }}</td>
                 </tr>
             @endforeach

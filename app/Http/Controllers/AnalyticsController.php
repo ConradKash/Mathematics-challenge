@@ -39,8 +39,8 @@ class AnalyticsController extends Controller
     $questions = QuestionAnswerRecord::withCount(['attempts as correct_answers' => function($query) {
             $query->where('score', '>', 0);
         }, 'attempts as total_attempts'])
-        ->get()
-        ->map(function($question) {
+        
+        ->map(function($question){
             $question->correct_percentage = ($question->total_attempts > 0) ?
                 ($question->correct_answers / $question->total_attempts) * 100 : 0;
             return $question;

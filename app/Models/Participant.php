@@ -18,7 +18,7 @@ class Participant extends Model
         'lastname',
         'emailAddress',
         'dob',
-        'registration_number',
+        'regNo',
         'imagePath',
     ];
 
@@ -40,5 +40,10 @@ class Participant extends Model
     public function viewReports()
     {
         return $this->hasMany(ViewReport::class);
+    }
+
+    public function attempts()
+    {
+        return $this->hasMany(ParticipantChallengeAttempt::class, 'participant_id');
     }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\School;
+use App\Models\Participant;
+use App\Models\ParticipantChallengeAttempt;
 
 class SchoolController extends Controller
 {
@@ -72,12 +74,27 @@ class SchoolController extends Controller
     }
     public function rankings()
     {
-        // Fetch schools with their related attempts and sort by average score
-        $schools = School::with(['attempts'])
+        // Fetch schools with their related participants and attempts, and calculate the average score
+        $schools = School::with(['participants.attempts'])
             ->get()
-            ->sortByDesc(function ($school) {
-                return $school->averageScore();
-            });
+            ->map(function ($school) {
+                $totalScore = 0;
+                $totalAttempts = 0;
+                $numParticipants = $school->participants->count();
+
+                foreach ($school->participants as $participant) {
+                    foreach ($participant->attempts as $attempt) {
+                        $totalScore += $attempt->score;
+                        $totalAttempts++;
+                    }
+                }
+
+                $school->average_score = $totalAttempts ? $totalScore / $totalAttempts : 0;
+                $school->num_participants = $numParticipants;
+                return $school;
+            })
+            ->sortByDesc('average_score')
+            ->values(); // Reset the keys to ensure correct indexing in the view
 
         return view('schools.rankings', compact('schools'));
     }

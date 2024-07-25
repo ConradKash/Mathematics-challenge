@@ -37,7 +37,7 @@ class ParticipantChallengeAttempt extends Model
 
     public function school()
     {
-        return $this->belongsTo(School::class, 'registration_number', 'registration_number');
+        return $this->belongsTo(School::class, 'regNo', 'regNo');
     }
     
 }

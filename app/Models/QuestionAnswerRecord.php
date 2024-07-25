@@ -14,7 +14,7 @@ class QuestionAnswerRecord extends Model
 
     public function challenges()
     {
-        return $this->belongsToMany(Challenge::class, 'challenge_question_answer_record', 'question_id', 'challenge_id')
+        return $this->belongsToMany(Challenge::class, 'question_answer_record', 'question_id', 'challenge_id')
             ->withTimestamps();
     }
 

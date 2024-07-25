@@ -12,7 +12,7 @@ class CreateSchoolsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('district');
-            $table->string('registration_number');
+            $table->string('regNo');
             $table->string('representative_email');
             $table->string('representative_name');
             $table->boolean('validated')->default(false);

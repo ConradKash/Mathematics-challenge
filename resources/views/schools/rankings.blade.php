@@ -13,22 +13,21 @@
                     <th>School Name</th>
                     <th>District</th>
                     <th>Registration Number</th>
+                    <th>Number of Participants</th>
                     <th>Average Score</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($schools as $index => $school)
-                @foreach ($school['attempts'] as $attempt)
                     <tr>
                         <td>{{ $index + 1 }}</td>
-                                <td>{{ $school['name'] }}</td>
-                                <td>{{ $attempt->challenge->title }}</td>
-                                <td>{{ $attempt->challenge->challenge_id }}</td>
-                                <td>{{ number_format($attempt->score, 2) }}</td>
-                            </tr>
-                        @endforeach
-                    @endforeach
-                
+                        <td>{{ $school->name }}</td>
+                        <td>{{ $school->district }}</td>
+                        <td>{{ $school->registration_number }}</td>
+                        <td>{{ $school->num_participants }}</td>
+                        <td>{{ number_format($school->average_score, 2) }}</td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>

@@ -8,7 +8,7 @@ class CreateQuestionAnswerRecordTable extends Migration
 {
     public function up()
     {
-        Schema::create('question_answer_record', function (Blueprint $table) {
+        Schema::create('question_answer_records', function (Blueprint $table) {
             $table->id('question_id');
             $table->text('question');
             $table->string('answer');
@@ -19,6 +19,6 @@ class CreateQuestionAnswerRecordTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('question_answer_record');
+        Schema::dropIfExists('question_answer_records');
     }
 }
