@@ -88,7 +88,7 @@ public class DbConnection {
     }
 
 
-    public JSONObject getQuestionDetails(int questionId) throws SQLException {
+    public JSONObject getQuestionDetails(int questionId) throws SQLException, JSONException {
         String sql = "SELECT correct_answer, score FROM question_answer_records WHERE question_id = ?";
         try (PreparedStatement stmt = this.connection.prepareStatement(sql)) {
             stmt.setInt(1, questionId);
