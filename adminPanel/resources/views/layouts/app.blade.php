@@ -30,6 +30,8 @@
         <link href="{{ asset('light-bootstrap/css/light-bootstrap-dashboard.css?v=2.0.0') }} " rel="stylesheet" />
         <!-- CSS Just for demo purpose, don't include it in your project -->
         <link href="{{ asset('light-bootstrap/css/demo.css') }}" rel="stylesheet" />
+            <!---CSS--->
+        <link rel ="stylesheet" href = "{{ asset('light-bootstrap/stylesheet.css') }}"/>
     </head>
 
     <body>
@@ -53,6 +55,7 @@
     </body>
         <!--   Core JS Files   -->
     <script src="{{ asset('light-bootstrap/js/core/jquery.3.2.1.min.js') }}" type="text/javascript"></script>
+    <script type="text/javascript" src = "{{ asset('light-bootstrap/script.js') }}"></script>
     <script src="{{ asset('light-bootstrap/js/core/popper.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('light-bootstrap/js/core/bootstrap.min.js') }}" type="text/javascript"></script>
 
