@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Challenge;
 use App\Models\Participant;
 use App\Models\ParticipantChallengeAttempt;
-use Barryvdh\DomPDF\Facade as PDF;
+use Barryvdh\DomPDF\Facade\PDF;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ChallengeResults;
 use Illuminate\Http\Request;
