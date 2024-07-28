@@ -1,6 +1,3 @@
-//
-// Source code recreated from a .cla
-
 package org.example.server;
 
 import org.json.*;
@@ -19,7 +16,7 @@ import java.util.Properties;
 
 public class Controller {
     JSONObject obj;
-
+//passing the object variable into the controller
     public Controller(JSONObject obj) {
         this.obj = obj;
     }
