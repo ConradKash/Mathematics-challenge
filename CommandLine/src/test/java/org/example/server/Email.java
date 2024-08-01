@@ -64,8 +64,6 @@ public class Email {
 
     }
 
-//    public static void main(String[] args) throws MessagingException {
-//        Email email = new Email();
-//        email.sendParticipantRegistrationRequestEmail("ogenrwothjimfrank@gmail.com", "frank@gmail.com", "frank");
-//    }
+    
+
 }
