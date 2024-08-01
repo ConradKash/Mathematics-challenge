@@ -178,6 +178,10 @@ public class ClientController {
                 return this.confirm(response);
             case "viewApplicants":
                 return this.viewApplicants(response);
+            case "submitChallenge":
+                return this.submitChallenge(response);
+            case "viewResults":
+                return this.viewResults(response);
             default:
                 throw new IllegalStateException("Invalid response");
         }
