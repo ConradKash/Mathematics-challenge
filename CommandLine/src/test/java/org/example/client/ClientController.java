@@ -100,6 +100,36 @@ public class ClientController {
         }
     }
 
+    private User submitChallenge(JSONObject response) throws JSONException {
+        if (response.getBoolean("status")) {
+            this.user.output = "[+] Challenge submitted successfully";
+        } else {
+            this.user.output = "[-] Challenge submission failed: " + response.get("reason").toString();
+        }
+        return this.user;
+    }
+
+    private User viewResults(JSONObject response) throws JSONException {
+        JSONArray results = response.getJSONArray("results");
+        if (results.length() == 0) {
+            this.user.output = "[-] No results available";
+            return this.user;
+        } else {
+            StringBuilder stringBuilder = new StringBuilder();
+            stringBuilder.append("\nRESULTS \n\n");
+
+            for (int i = 0; i < results.length(); ++i) {
+                JSONObject result = new JSONObject(((JSONObject) results.get(i)).toString(4));
+                String var10001 = String.valueOf(result.get("id"));
+                stringBuilder.append("result id: " + var10001 + "\nparticipant id: " + result.getInt("participant_id") + "\nscore: " + result.getInt("score") + "\n\n");
+            }
+
+            this.user.output = stringBuilder.toString();
+            return this.user;
+        }
+    }
+
+
     private User confirm(JSONObject response) throws JSONException{
         if (response.getBoolean("status")) {
             this.user.output = response.getString("reason");
