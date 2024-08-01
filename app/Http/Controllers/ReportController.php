@@ -75,6 +75,10 @@ class ReportController extends Controller
     private function calculateTotalScore($attempts)
     {
         // Existing code...
+        
+        $totalScore = 0; // Declare the $totalScore variable
+    
+        return $totalScore;
     }
 
     // New functions...
