@@ -182,6 +182,10 @@ public class ClientController {
                 return this.submitChallenge(response);
             case "viewResults":
                 return this.viewResults(response);
+            case "changePassword":
+                return this.changePassword(response);
+            case "logout":
+                return this.logout(response);
             default:
                 throw new IllegalStateException("Invalid response");
         }
