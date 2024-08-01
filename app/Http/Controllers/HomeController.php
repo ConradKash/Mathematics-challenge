@@ -55,6 +55,25 @@ class HomeController extends Controller
             $dataBar .= "['" . $school->school_name . "', " . $school->student_count . ", " . $school->total_marks . "],";
         }
         $chartData2 = $dataBar;
+
+        $studentCountByGender = DB::select(DB::raw("
+            SELECT s.name AS school_name, COUNT(p.participant_id) AS student_count, SUM(a.is_correct) AS total_marks 
+            FROM schools s 
+            LEFT JOIN participants p 
+            ON p.registration_number = s.registration_number 
+            LEFT JOIN attempts a 
+            ON p.participant_id = a.participant_id 
+            GROUP BY s.registration_number;
+            "));
+        $dataBar1 = "";
+        foreach ($studentCountBySchool as $school) {
+            if ($school->total_marks == NULL) {
+                $school->total_marks = 0;
+            }
+            $dataBar1 .= "['" . $school->school_name . "', " . $school->student_count . ", " . $school->total_marks . "],";
+        }
+        $chartData3 = $dataBar;
         return view('dashboard', compact('chartData', 'chartData2'));
     }
+
 }
