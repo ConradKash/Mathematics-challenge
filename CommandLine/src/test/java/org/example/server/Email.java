@@ -64,6 +64,53 @@ public class Email {
 
     }
 
-    
+    public void sendPasswordResetEmail(String to, String resetLink) throws MessagingException {
+        MimeMessage message = new MimeMessage(this.session);
+
+        message.setFrom(new InternetAddress(this.from));
+
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
+        message.setSubject("Password Reset");
+
+        StringBuilder emailMessage = new StringBuilder();
+        emailMessage.append("Password Reset Request\n\n");
+        emailMessage.append("You have requested to reset your password. Please click on the link below to proceed:\n\n");
+        emailMessage.append(resetLink);
+
+        message.setText(emailMessage.toString());
+
+        Transport.send(message);
+    }
+
+    public void sendEmailWithAttachment(String to, String subject, String body, String attachmentPath) throws MessagingException {
+        MimeMessage message = new MimeMessage(this.session);
+
+        message.setFrom(new InternetAddress(this.from));
+
+        message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
+
+        message.setSubject(subject);
+
+        // Create the message body part
+        MimeBodyPart messageBodyPart = new MimeBodyPart();
+        messageBodyPart.setText(body);
+
+        // Create the attachment body part
+        MimeBodyPart attachmentBodyPart = new MimeBodyPart();
+        DataSource source = new FileDataSource(attachmentPath);
+        attachmentBodyPart.setDataHandler(new DataHandler(source));
+        attachmentBodyPart.setFileName(new File(attachmentPath).getName());
+
+        // Create a multipart message and add the parts to it
+        Multipart multipart = new MimeMultipart();
+        multipart.addBodyPart(messageBodyPart);
+        multipart.addBodyPart(attachmentBodyPart);
+
+        // Set the multipart message as the content of the email
+        message.setContent(multipart);
+
+        Transport.send(message);
+    }
 
 }
