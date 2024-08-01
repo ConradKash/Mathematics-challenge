@@ -30,6 +30,25 @@ public class ClientController {
         return this.user;
     }
 
+    private User logout(JSONObject response) throws JSONException {
+        if (response.getBoolean("status")) {
+            this.user.isAuthenticated = false;
+            this.user.output = "[+] Successfully logged out";
+        } else {
+            this.user.output = "[-] Logout failed: " + response.get("reason").toString();
+        }
+        return this.user;
+    }
+
+    private User changePassword(JSONObject response) throws JSONException {
+        if (response.getBoolean("status")) {
+            this.user.output = "[+] Password changed successfully";
+        } else {
+            this.user.output = "[-] Password change failed: " + response.get("reason").toString();
+        }
+        return this.user;
+    }
+
     private User register(JSONObject response) throws JSONException{
         if (response.getBoolean("status")) {
             this.user.output = "[+] " + response.get("reason").toString();
