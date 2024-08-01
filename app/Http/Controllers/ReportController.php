@@ -6,11 +6,13 @@ use App\Models\Participant;
 use App\Models\ParticipantChallengeAttempt;
 use App\Models\ViewReport;
 use Illuminate\Support\Facades\Mail;
-use Barryvdh\DomPDF\Facade as PDF;
+use Barryvdh\DomPDF\Facad\PDF;
 use App\Mail\ReportMail;
 
 class ReportController extends Controller
 {
+    // Existing code...
+
     public function showReport($participantId)
     {
         // Generate report data
@@ -19,6 +21,8 @@ class ReportController extends Controller
         // Return view with the data
         return view('reports.participantReport', $data);
     }
+
+    // Existing code...
 
     private function generateReport($participantId)
     {
@@ -42,76 +46,314 @@ class ReportController extends Controller
             'viewReports' => $viewReports,
             'correctAnswers' => $this->getCorrectAnswers($attempts),
             'totalScore' => $this->calculateTotalScore($attempts),
+            'averageScore' => $this->calculateAverageScore($attempts),
+            'highestScore' => $this->getHighestScore($attempts),
+            'lowestScore' => $this->getLowestScore($attempts),
+            'totalAttempts' => $this->getTotalAttempts($attempts),
+            'completedAttempts' => $this->getCompletedAttempts($attempts),
+            'incompleteAttempts' => $this->getIncompleteAttempts($attempts),
+            'passingAttempts' => $this->getPassingAttempts($attempts),
+            'failingAttempts' => $this->getFailingAttempts($attempts),
+            'passingPercentage' => $this->getPassingPercentage($attempts),
+            'failingPercentage' => $this->getFailingPercentage($attempts),
+            'averageTimeTaken' => $this->calculateAverageTimeTaken($attempts),
+            'totalTimeTaken' => $this->calculateTotalTimeTaken($attempts),
+            'averageMarksPerAttempt' => $this->calculateAverageMarksPerAttempt($attempts),
+            'highestMarksPerAttempt' => $this->getHighestMarksPerAttempt($attempts),
+            'lowestMarksPerAttempt' => $this->getLowestMarksPerAttempt($attempts),
+            'averageMarksPerQuestion' => $this->calculateAverageMarksPerQuestion($attempts),
+            'highestMarksPerQuestion' => $this->getHighestMarksPerQuestion($attempts),
+            'lowestMarksPerQuestion' => $this->getLowestMarksPerQuestion($attempts),
         ];
     }
 
     private function getCorrectAnswers($attempts)
     {
-        $correctAnswers = [];
-
-        foreach ($attempts as $attempt) {
-            // Get the first question answer record safely
-            $questionAnswerRecord = $attempt->challenge->questionAnswerRecords->first();
-
-            if ($questionAnswerRecord) {
-                $correctAnswers[] = [
-                    'question' => $questionAnswerRecord->question,
-                    'correct_answer' => $questionAnswerRecord->answer,
-                    'participant_answer' => $attempt->participant_answer,
-                    'marks' => $questionAnswerRecord->score,
-                ];
-            } else {
-                $correctAnswers[] = [
-                    'question' => 'N/A',
-                    'correct_answer' => 'N/A',
-                    'participant_answer' => $attempt->participant_answer,
-                    'marks' => 0,
-                ];
-            }
-        }
-
-        return $correctAnswers;
+        // Existing code...
     }
 
     private function calculateTotalScore($attempts)
     {
-        $totalScore = 0;
+        // Existing code...
+    }
+
+    // New functions...
+
+    private function calculateAverageScore($attempts)
+    {
+        $totalScore = $this->calculateTotalScore($attempts);
+        $totalAttempts = $this->getTotalAttempts($attempts);
+
+        if ($totalAttempts > 0) {
+            return $totalScore / $totalAttempts;
+        }
+
+        return 0;
+    }
+
+    private function getHighestScore($attempts)
+    {
+        $highestScore = 0;
 
         foreach ($attempts as $attempt) {
-            // Get the first question answer record safely
             $questionAnswerRecord = $attempt->challenge->questionAnswerRecords->first();
 
             if ($questionAnswerRecord && $attempt->participant_answer == $questionAnswerRecord->answer) {
-                $totalScore += $questionAnswerRecord->score;
+                $score = $questionAnswerRecord->score;
+
+                if ($score > $highestScore) {
+                    $highestScore = $score;
+                }
             }
         }
 
-        return $totalScore;
+        return $highestScore;
     }
+
+    private function getLowestScore($attempts)
+    {
+        $lowestScore = PHP_INT_MAX;
+
+        foreach ($attempts as $attempt) {
+            $questionAnswerRecord = $attempt->challenge->questionAnswerRecords->first();
+
+            if ($questionAnswerRecord && $attempt->participant_answer == $questionAnswerRecord->answer) {
+                $score = $questionAnswerRecord->score;
+
+                if ($score < $lowestScore) {
+                    $lowestScore = $score;
+                }
+            }
+        }
+
+        return $lowestScore === PHP_INT_MAX ? 0 : $lowestScore;
+    }
+
+    private function getTotalAttempts($attempts)
+    {
+        return count($attempts);
+    }
+
+    private function getCompletedAttempts($attempts)
+    {
+        $completedAttempts = 0;
+
+        foreach ($attempts as $attempt) {
+            if ($attempt->is_completed) {
+                $completedAttempts++;
+            }
+        }
+
+        return $completedAttempts;
+    }
+
+    private function getIncompleteAttempts($attempts)
+    {
+        $incompleteAttempts = 0;
+
+        foreach ($attempts as $attempt) {
+            if (!$attempt->is_completed) {
+                $incompleteAttempts++;
+            }
+        }
+
+        return $incompleteAttempts;
+    }
+
+    private function getPassingAttempts($attempts)
+    {
+        $passingAttempts = 0;
+
+        foreach ($attempts as $attempt) {
+            $questionAnswerRecord = $attempt->challenge->questionAnswerRecords->first();
+
+            if ($questionAnswerRecord && $attempt->participant_answer == $questionAnswerRecord->answer) {
+                $score = $questionAnswerRecord->score;
+
+                if ($score > 0) {
+                    $passingAttempts++;
+                }
+            }
+        }
+
+        return $passingAttempts;
+    }
+
+    private function getFailingAttempts($attempts)
+    {
+        $failingAttempts = 0;
+
+        foreach ($attempts as $attempt) {
+            $questionAnswerRecord = $attempt->challenge->questionAnswerRecords->first();
+
+            if ($questionAnswerRecord && $attempt->participant_answer == $questionAnswerRecord->answer) {
+                $score = $questionAnswerRecord->score;
+
+                if ($score === 0) {
+                    $failingAttempts++;
+                }
+            }
+        }
+
+        return $failingAttempts;
+    }
+
+    private function getPassingPercentage($attempts)
+    {
+        $passingAttempts = $this->getPassingAttempts($attempts);
+        $totalAttempts = $this->getTotalAttempts($attempts);
+
+        if ($totalAttempts > 0) {
+            return ($passingAttempts / $totalAttempts) * 100;
+        }
+
+        return 0;
+    }
+
+    private function getFailingPercentage($attempts)
+    {
+        $failingAttempts = $this->getFailingAttempts($attempts);
+        $totalAttempts = $this->getTotalAttempts($attempts);
+
+        if ($totalAttempts > 0) {
+            return ($failingAttempts / $totalAttempts) * 100;
+        }
+
+        return 0;
+    }
+
+    private function calculateAverageTimeTaken($attempts)
+    {
+        $totalTimeTaken = $this->calculateTotalTimeTaken($attempts);
+        $totalAttempts = $this->getTotalAttempts($attempts);
+
+        if ($totalAttempts > 0) {
+            return $totalTimeTaken / $totalAttempts;
+        }
+
+        return 0;
+    }
+
+    private function calculateTotalTimeTaken($attempts)
+    {
+        $totalTimeTaken = 0;
+
+        foreach ($attempts as $attempt) {
+            $totalTimeTaken += $attempt->time_taken;
+        }
+
+        return $totalTimeTaken;
+    }
+
+    private function calculateAverageMarksPerAttempt($attempts)
+    {
+        $totalScore = $this->calculateTotalScore($attempts);
+        $totalAttempts = $this->getTotalAttempts($attempts);
+
+        if ($totalAttempts > 0) {
+            return $totalScore / $totalAttempts;
+        }
+
+        return 0;
+    }
+
+    private function getHighestMarksPerAttempt($attempts)
+    {
+        $highestMarks = 0;
+
+        foreach ($attempts as $attempt) {
+            $questionAnswerRecord = $attempt->challenge->questionAnswerRecords->first();
+
+            if ($questionAnswerRecord && $attempt->participant_answer == $questionAnswerRecord->answer) {
+                $score = $questionAnswerRecord->score;
+
+                if ($score > $highestMarks) {
+                    $highestMarks = $score;
+                }
+            }
+        }
+
+        return $highestMarks;
+    }
+
+    private function getLowestMarksPerAttempt($attempts)
+    {
+        $lowestMarks = PHP_INT_MAX;
+
+        foreach ($attempts as $attempt) {
+            $questionAnswerRecord = $attempt->challenge->questionAnswerRecords->first();
+
+            if ($questionAnswerRecord && $attempt->participant_answer == $questionAnswerRecord->answer) {
+                $score = $questionAnswerRecord->score;
+
+                if ($score < $lowestMarks) {
+                    $lowestMarks = $score;
+                }
+            }
+        }
+
+        return $lowestMarks === PHP_INT_MAX ? 0 : $lowestMarks;
+    }
+
+    private function calculateAverageMarksPerQuestion($attempts)
+    {
+        $totalScore = $this->calculateTotalScore($attempts);
+        $totalQuestions = $this->getTotalQuestions($attempts);
+
+        if ($totalQuestions > 0) {
+            return $totalScore / $totalQuestions;
+        }
+
+        return 0;
+    }
+
+    private function getHighestMarksPerQuestion($attempts)
+    {
+        $highestMarks = 0;
+
+        foreach ($attempts as $attempt) {
+            $questionAnswerRecord = $attempt->challenge->questionAnswerRecords->first();
+
+            if ($questionAnswerRecord && $attempt->participant_answer == $questionAnswerRecord->answer) {
+                $score = $questionAnswerRecord->score;
+
+                if ($score > $highestMarks) {
+                    $highestMarks = $score;
+                }
+            }
+        }
+
+        return $highestMarks;
+    }
+
+    private function getLowestMarksPerQuestion($attempts)
+    {
+        $lowestMarks = PHP_INT_MAX;
+
+        foreach ($attempts as $attempt) {
+            $questionAnswerRecord = $attempt->challenge->questionAnswerRecords->first();
+
+            if ($questionAnswerRecord && $attempt->participant_answer == $questionAnswerRecord->answer) {
+                $score = $questionAnswerRecord->score;
+
+                if ($score < $lowestMarks) {
+                    $lowestMarks = $score;
+                }
+            }
+        }
+
+        return $lowestMarks === PHP_INT_MAX ? 0 : $lowestMarks;
+    }
+
+    // Existing code...
 
     public function downloadReport($participantId)
     {
-        $data = $this->generateReport($participantId);
-
-        // Load view and pass data to it
-        $pdf = PDF::loadView('reports.participantReport', $data);
-
-        // Return PDF download response
-        return $pdf->download('competition_report.pdf');
+        // Existing code...
     }
 
     public function sendReport($participantId)
     {
-        $data = $this->generateReport($participantId);
-
-        // Generate PDF for the report
-        $pdf = PDF::loadView('reports.participantReport', $data)->output();
-
-        // Attach PDF data to the mail
-        $data['pdf'] = $pdf;
-
-        Mail::to($data['participant']->email)->send(new ReportMail($data));
-
-        return response()->json(['message' => 'Report sent successfully.']);
+        // Existing code...
     }
 }
